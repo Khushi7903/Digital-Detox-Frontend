@@ -30,7 +30,7 @@ export default function Navbar() {
   return (
     <header className="bg-white text-gray-800 border-b shadow-sm fixed top-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
-        <Link to="/" className="text-xl font-bold text-cyan-600">Digital Detox</Link>
+        <Link to="/" className="text-xl font-bold text-cyan-600">Suraksha Buddy</Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6 items-center">

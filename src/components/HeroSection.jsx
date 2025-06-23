@@ -33,7 +33,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            Digital Detox
+            Suraksha Buddy
           </motion.h1>
 
           {/* Subheading */}
