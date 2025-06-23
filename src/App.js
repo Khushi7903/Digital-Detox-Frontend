@@ -11,6 +11,8 @@ import ResultPage from "./pages/ResultPage";
 import ScoresPage from "./pages/ScoresPage";
 import Toolkit from "./pages/Toolkit";
 import ChatPage from "./pages/ChatPage";
+import ProtectedRoute from "./components/ProtectedRoute"; // Adjust path if needed
+
 
 export default function App() {
   return (
@@ -27,7 +29,14 @@ export default function App() {
           <Route path="/result" element={<ResultPage />} />
           <Route path="/score-history" element={<ScoresPage />} />
           <Route path="/toolkit" element={<Toolkit />} />
-          <Route path="/chat" element={<ChatPage />} />
+          <Route
+            path="/chat"
+            element={
+              <ProtectedRoute>
+                <ChatPage/>
+              </ProtectedRoute>
+            }
+            />
         </Routes>
       </main>
       <Footer />
