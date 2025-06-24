@@ -16,6 +16,8 @@ import {
   Title
 } from "chart.js";
 import { BASE_URL } from "../config.js"
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
 
 ChartJS.register(
   LineElement,
@@ -90,6 +92,7 @@ export default function ScoresPage() {
   };
 
   return (
+    <><Navbar />
     <section className="min-h-screen bg-gradient-to-br from-white via-cyan-50 to-white px-4 py-16">
       <motion.div
         className="max-w-5xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl"
@@ -118,8 +121,7 @@ export default function ScoresPage() {
                 options={{
                   responsive: true,
                   maintainAspectRatio: false,
-                }}
-              />
+                }} />
             </div>
           </div>
 
@@ -131,8 +133,7 @@ export default function ScoresPage() {
                 options={{
                   responsive: true,
                   maintainAspectRatio: false,
-                }}
-              />
+                }} />
             </div>
           </div>
         </div>
@@ -165,5 +166,7 @@ export default function ScoresPage() {
         </div>
       </motion.div>
     </section>
+    <Footer/>
+    </>
   );
 }

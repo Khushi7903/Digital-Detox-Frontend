@@ -2,6 +2,8 @@
 import { Download } from "lucide-react";
 import pdfFile from "../assets/tech_free_quest_guide.pdf";
 import { motion } from "framer-motion";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Toolkit() {
   const tools = [
@@ -39,6 +41,7 @@ export default function Toolkit() {
   };
 
   return (
+    <><Navbar />
     <section className="min-h-screen px-6 py-16 bg-gradient-to-br from-white via-cyan-50 to-white mt-8">
       <motion.div
         className="max-w-5xl mx-auto text-center"
@@ -94,5 +97,7 @@ export default function Toolkit() {
         </motion.div>
       </motion.div>
     </section>
+    <Footer/>
+    </>
   );
 }

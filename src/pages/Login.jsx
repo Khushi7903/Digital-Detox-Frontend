@@ -1,8 +1,11 @@
-// src/pages/AuthPage.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL } from "../config.js"
+import { BASE_URL } from "../config.js";
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
+import { motion } from "framer-motion";
+import { FaUser, FaEnvelope, FaLock, FaIdCard } from "react-icons/fa";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -29,14 +32,12 @@ export default function AuthPage() {
       const res = await axios.post(url, { ...formData, role });
       setMessage(res.data.message);
 
-      // ✅ Store login info in localStorage
       localStorage.setItem("user", JSON.stringify({
         id: formData.id,
         role,
         email: formData.email,
       }));
 
-      // ✅ Redirect after 1 second
       setTimeout(() => {
         navigate("/");
       }, 1000);
@@ -47,90 +48,105 @@ export default function AuthPage() {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-white via-cyan-50 to-white flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-5">
-        <h2 className="text-xl font-bold text-cyan-700 text-center">
-          {isLogin ? "Login" : "Sign Up"} as {role.charAt(0).toUpperCase() + role.slice(1)}
-        </h2>
+    <>
+      <Navbar />
+      <section className="min-h-screen bg-gradient-to-br from-[#fff5f5] via-white to-[#fff5f5] flex items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="max-w-md w-full bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6"
+        >
+          <h2 className="text-2xl font-bold text-center">
+            <span className="text-red-500">{isLogin ? "Login" : "Sign Up"}</span> <span className="text-gray-700">as {role.charAt(0).toUpperCase() + role.slice(1)}</span>
+          </h2>
 
-        {/* Role Toggle */}
-        <div className="flex justify-center gap-4 mb-2">
-          {["student", "teacher"].map((r) => (
+          <div className="flex justify-center gap-4">
+            {["student", "teacher"].map((r) => (
+              <button
+                key={r}
+                className={`px-4 py-1 rounded-full border text-sm font-medium transition ${role === r ? "bg-red-500 text-white" : "border-red-500 text-red-500 hover:bg-red-100"}`}
+                onClick={() => setRole(r)}
+              >
+                {r.charAt(0).toUpperCase() + r.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {!isLogin && (
+              <div className="relative">
+                <FaUser className="absolute left-3 top-3 text-gray-400" />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  value={formData.name}
+                  required
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
+                />
+              </div>
+            )}
+            <div className="relative">
+              <FaIdCard className="absolute left-3 top-3 text-gray-400" />
+              <input
+                type="text"
+                name="id"
+                placeholder={`${role === "student" ? "Student" : "Teacher"} ID`}
+                value={formData.id}
+                required
+                onChange={handleChange}
+                className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
+              />
+            </div>
+            <div className="relative">
+              <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                required
+                onChange={handleChange}
+                className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
+              />
+            </div>
+            <div className="relative">
+              <FaLock className="absolute left-3 top-3 text-gray-400" />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                required
+                onChange={handleChange}
+                className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
+              />
+            </div>
             <button
-              key={r}
-              className={`px-4 py-1 rounded-full border ${
-                role === r ? "bg-cyan-600 text-white" : "border-cyan-600 text-cyan-600"
-              }`}
-              onClick={() => setRole(r)}
+              type="submit"
+              className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
             >
-              {r.charAt(0).toUpperCase() + r.slice(1)}
+              {isLogin ? "Login" : "Sign Up"}
             </button>
-          ))}
-        </div>
+          </form>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {!isLogin && (
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              required
-              onChange={handleChange}
-              className="w-full px-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-cyan-400"
-            />
+          {message && (
+            <p className="text-sm text-center text-red-600 mt-2">
+              {message}
+            </p>
           )}
-          <input
-            type="text"
-            name="id"
-            placeholder={`${role === "student" ? "Student" : "Teacher"} ID`}
-            value={formData.id}
-            required
-            onChange={handleChange}
-            className="w-full px-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-cyan-400"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            required
-            onChange={handleChange}
-            className="w-full px-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-cyan-400"
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            required
-            onChange={handleChange}
-            className="w-full px-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-cyan-400"
-          />
-          <button
-            type="submit"
-            className="w-full bg-cyan-600 text-white py-2 rounded-md hover:bg-cyan-700 transition"
-          >
-            {isLogin ? "Login" : "Sign Up"}
-          </button>
-        </form>
 
-        {/* Message */}
-        {message && (
-          <p className="text-sm text-center text-cyan-700 mt-2">
-            {message}
+          <p className="text-xs text-center text-gray-600 mt-4">
+            {isLogin ? "Don't have an account?" : "Already have an account?"} {" "}
+            <button onClick={handleToggle} className="text-red-600 underline">
+              {isLogin ? "Sign Up" : "Login"}
+            </button>
           </p>
-        )}
-
-        {/* Toggle Login/Signup */}
-        <p className="text-xs text-center text-gray-600 mt-4">
-          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-          <button onClick={handleToggle} className="text-cyan-700 underline">
-            {isLogin ? "Sign Up" : "Login"}
-          </button>
-        </p>
-      </div>
-    </section>
+        </motion.div>
+      </section>
+      <Footer />
+    </>
   );
 }

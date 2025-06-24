@@ -1,6 +1,8 @@
 // src/pages/SelfTest.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const questions = [
   "I check my phone first thing in the morning.",
@@ -42,6 +44,7 @@ export default function SelfTest() {
   };
 
   return (
+    <><Navbar />
     <section className="min-h-screen px-4 py-20 bg-gradient-to-br from-white via-cyan-50 to-white">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-2xl md:text-3xl font-bold text-center text-cyan-700 mb-6">Cyber Psychology Self-Test</h1>
@@ -56,8 +59,7 @@ export default function SelfTest() {
                     name={`q${index}`}
                     value="yes"
                     onChange={() => handleChange(index, "yes")}
-                    required
-                  /> Yes
+                    required /> Yes
                 </label>
                 <label>
                   <input
@@ -65,8 +67,7 @@ export default function SelfTest() {
                     name={`q${index}`}
                     value="no"
                     onChange={() => handleChange(index, "no")}
-                    required
-                  /> No
+                    required /> No
                 </label>
               </div>
             </div>
@@ -80,5 +81,6 @@ export default function SelfTest() {
         </form>
       </div>
     </section>
+    <Footer/></>
   );
 }

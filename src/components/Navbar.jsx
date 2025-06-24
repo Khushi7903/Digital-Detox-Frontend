@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -28,20 +29,39 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="bg-white text-gray-800 border-b shadow-sm fixed top-0 w-full z-50">
+    <motion.header
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-md"
+    >
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
-        <Link to="/" className="text-xl font-bold text-cyan-600">Suraksha Buddy</Link>
+        {/* Logo */}
+        <Link to="/" className="text-xl font-bold text-grey-500">
+          Suraksha Buddy
+        </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-6 items-center">
-          {navLinks.map((link, index) => (
-            <Link key={index} to={link.to} className="hover:text-cyan-600">
-              {link.label}
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex space-x-6 items-center font-medium">
+          {navLinks.map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              className={`hover:text-red-500 transition ${
+                location.pathname === to ? "text-red-500" : "text-gray-700"
+              }`}
+            >
+              {label}
             </Link>
           ))}
 
           {isLoggedIn && (
-            <Link to="/score-history" className="hover:text-cyan-600">
+            <Link
+              to="/score-history"
+              className={`hover:text-red-500 transition ${
+                location.pathname === "/score-history" ? "text-red-500" : "text-gray-700"
+              }`}
+            >
               Score History
             </Link>
           )}
@@ -49,29 +69,27 @@ export default function Navbar() {
           {!isLoggedIn ? (
             <Link
               to="/login"
-              className="bg-cyan-500 text-white px-4 py-1 rounded hover:bg-cyan-600"
+              className="bg-[#297AA2] text-white px-4 py-1 rounded hover:bg-[#215f7d]"
             >
               Login
             </Link>
           ) : (
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
+              className="bg-[#F25C5C] text-white px-4 py-1 rounded hover:bg-red-600"
             >
               Logout
             </button>
           )}
         </nav>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+        {/* Mobile Menu Toggle */}
+        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
-      {/* Mobile Dropdown Menu with Framer Motion */}
+      {/* Mobile Nav */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -79,16 +97,16 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white px-4 py-3 space-y-2 text-center shadow"
+            className="md:hidden bg-white/95 backdrop-blur-md px-6 py-4 text-center space-y-3 rounded-b-xl shadow-md"
           >
-            {navLinks.map((link, index) => (
+            {navLinks.map(({ to, label }) => (
               <Link
-                key={index}
-                to={link.to}
+                key={to}
+                to={to}
                 onClick={() => setIsOpen(false)}
-                className="block text-gray-700 hover:text-cyan-600"
+                className="block text-gray-800 hover:text-red-500 text-base font-medium"
               >
-                {link.label}
+                {label}
               </Link>
             ))}
 
@@ -96,36 +114,36 @@ export default function Navbar() {
               <Link
                 to="/score-history"
                 onClick={() => setIsOpen(false)}
-                className="block text-gray-700 hover:text-cyan-600"
+                className="block text-gray-800 hover:text-red-500 text-base font-medium"
               >
                 Score History
               </Link>
             )}
 
-            {!isLoggedIn ? (
-              <Link
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="block bg-cyan-500 text-white px-4 py-1 rounded"
-              >
-                Login
-              </Link>
-            ) : (
-                <div className="flex justify-center">
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setIsOpen(false);
-                }}
-                className="block bg-red-500 text-white px-4 py-1 rounded"
-              >
-                Logout
-              </button>
-              </div>
-            )}
+            <div className="pt-3">
+              {!isLoggedIn ? (
+                <Link
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full bg-[#297AA2] text-white px-4 py-2 rounded-md mx-auto max-w-xs"
+                >
+                  Login
+                </Link>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsOpen(false);
+                  }}
+                  className="block w-full bg-[#F25C5C] text-white px-4 py-2 rounded-md mx-auto max-w-xs"
+                >
+                  Logout
+                </button>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }

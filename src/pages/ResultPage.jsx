@@ -6,6 +6,8 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import axios from "axios";
 import { BASE_URL } from "../config.js"
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
 
 export default function ResultPage() {
   const location = useLocation();
@@ -61,6 +63,7 @@ export default function ResultPage() {
   };
 
   return (
+    <><Navbar />
     <section className="min-h-screen bg-gradient-to-br from-white via-cyan-50 to-white px-4 py-20">
       <motion.div
         ref={resultRef}
@@ -115,5 +118,6 @@ export default function ResultPage() {
         </div>
       </motion.div>
     </section>
+    <Footer/></>
   );
 }

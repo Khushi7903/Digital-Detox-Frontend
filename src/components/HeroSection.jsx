@@ -1,79 +1,65 @@
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import heroVideo from "../assets/cyber-bg.mp4";
+// import { Link } from "react-router-dom";
+// import { motion } from "framer-motion";
+// import heroVideo from "../assets/cyber-bg.mp4";
 
-export default function HeroSection() {
-  return (
-    <section className="relative w-full h-screen overflow-hidden">
-      {/* Background Video */}
-      <video
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        src={heroVideo}
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+// export default function HeroSection() {
+//   return (
+//     <section className="relative w-full h-screen overflow-hidden bg-[#FFFDF6]">
+//       {/* Background Video */}
+//       <video
+//         className="absolute inset-0 w-full h-full object-cover z-0"
+//         src={heroVideo}
+//         autoPlay
+//         muted
+//         loop
+//         playsInline
+//       />
 
-      {/* Glass Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-white/10 backdrop-blur-[2px] z-10" />
+//       {/* Transparent Overlay for contrast */}
+//       <div className="absolute inset-0 bg-black/40 z-10" />
 
-      {/* Foreground Content */}
-      <div className="relative z-20 w-full h-full flex items-center justify-center px-4">
-        <motion.div
-          className="bg-white/20 backdrop-blur-md p-4 sm:p-6 md:p-8 rounded-xl shadow-lg w-full max-w-md sm:max-w-lg text-center text-white"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          {/* Main Title */}
-          <motion.h1
-            className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-300 mb-2"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            Suraksha Buddy
-          </motion.h1>
+//       {/* Content */}
+//       <div className="relative z-20 w-full h-full flex items-center justify-start px-6 md:px-20 pt-16">
+//         <motion.div
+//           className="text-left max-w-2xl"
+//           initial={{ opacity: 0, x: -30 }}
+//           animate={{ opacity: 1, x: 0 }}
+//           transition={{ duration: 0.8 }}
+//         >
+//           <motion.h1
+//             className="text-lg sm:text-2xl font-semibold text-white mb-2"
+//             initial={{ opacity: 0, y: -10 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ delay: 0.3 }}
+//           >
+//             Suraksha Buddy
+//           </motion.h1>
 
-          {/* Subheading */}
-          <motion.h3
-            className="text-sm sm:text-lg font-semibold text-white mb-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-          >
-            Reclaim Your Focus with CyberPsychology Detox
-          </motion.h3>
+//           <motion.p
+//             className="text-2xl sm:text-4xl lg:text-5xl text-white leading-tight mb-6"
+//             initial={{ opacity: 0, x: -20 }}
+//             animate={{ opacity: 1, x: 0 }}
+//             transition={{ delay: 0.5 }}
+//           >
+//             Empowering kids,<br />
+//             informing parents,<br />
+//             supporting schools.
+//           </motion.p>
 
-          {/* Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-3"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-          >
-            <Link
-              to="/test"
-              className="bg-cyan-500 hover:bg-cyan-600 text-white text-sm px-5 py-2 rounded-full"
-            >
-              Start Self-Test
-            </Link>
-            <Link
-              to="/toolkit"
-              className="bg-white/80 text-gray-900 text-sm px-5 py-2 rounded-full hover:bg-white"
-            >
-              Detox Toolkit
-            </Link>
-            <Link
-              to="/chat"
-              className="bg-white/80 text-gray-900 text-sm px-5 py-2 rounded-full hover:bg-white"
-            >
-              Talk to a Mentor / Buddy →
-            </Link>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
+//           <motion.div
+//             initial={{ opacity: 0, y: 10 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ delay: 0.7 }}
+//           >
+//             <Link
+//               to="/test"
+//               className="bg-[#F25C5C] hover:bg-red-600 text-white text-sm sm:text-base px-6 py-3 rounded-full shadow-md transition duration-300"
+//             >
+//               Start Self-Test
+//             </Link>
+//           </motion.div>
+//         </motion.div>
+//       </div>
+//     </section>
+//   );
+// }

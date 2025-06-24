@@ -3,8 +3,6 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import Services from "./pages/Services";
 import SelfTest from "./pages/SelfTest";
 import ResultPage from "./pages/ResultPage";
@@ -17,7 +15,6 @@ import ProtectedRoute from "./components/ProtectedRoute"; // Adjust path if need
 export default function App() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      <Navbar />
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -39,7 +36,6 @@ export default function App() {
             />
         </Routes>
       </main>
-      <Footer />
     </div>
   );
 }
