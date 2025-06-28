@@ -153,8 +153,8 @@ export default function Home() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              An <i>Initiative</i> to help <br/>
-               the Younger Generations <br/> to stay Humane in the AI world
+              An <i>Initiative</i> to <br />help 
+               the Younger Generations <br />to stay Humane in the AI world
             </motion.p>
 
             <motion.div
