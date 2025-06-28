@@ -9,7 +9,6 @@ import heroVideo from "../assets/cyber-bg.mp4";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -17,16 +16,11 @@ function Navbar() {
     setIsLoggedIn(!!user);
   }, [location]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
-    navigate("/login");
-  };
-
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/about", label: "About Us" },
-    { to: "/services", label: "Services" },
+    { to: "/infodesk", label: "InfoDesk" },
+    { to: "/team", label: "Our Team" },
     { to: "/contact", label: "Contact" },
   ];
 
@@ -38,8 +32,8 @@ function Navbar() {
       className="absolute top-0 left-0 w-full z-40 bg-transparent text-white"
     >
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
-        <Link to="/" className="text-xl font-bold text-white">
-          Suraksha Buddy
+        <Link to="/" className="flex items-center gap-2 text-xl font-bold text-white">
+          Suraksha Buddy
         </Link>
 
         <nav className="hidden md:flex space-x-6 items-center font-medium">
@@ -56,21 +50,6 @@ function Navbar() {
             <Link to="/score-history" className="hover:text-[#F25C5C]">
               Score History
             </Link>
-          )}
-          {!isLoggedIn ? (
-            <Link
-              to="/login"
-              className="bg-[#297AA2] text-white px-4 py-1 rounded hover:bg-[#215f7d]"
-            >
-              Login
-            </Link>
-          ) : (
-            <button
-              onClick={handleLogout}
-              className="bg-[#F25C5C] text-white px-4 py-1 rounded hover:bg-red-600"
-            >
-              Logout
-            </button>
           )}
         </nav>
 
@@ -109,27 +88,6 @@ function Navbar() {
                 Score History
               </Link>
             )}
-            <div className="pt-3">
-              {!isLoggedIn ? (
-                <Link
-                  to="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full bg-[#297AA2] text-white px-4 py-2 rounded-md mx-auto max-w-xs"
-                >
-                  Login
-                </Link>
-              ) : (
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsOpen(false);
-                  }}
-                  className="block w-full bg-[#F25C5C] text-white px-4 py-2 rounded-md mx-auto max-w-xs"
-                >
-                  Logout
-                </button>
-              )}
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -139,9 +97,22 @@ function Navbar() {
 
 // 🔹 Home Component
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    setIsLoggedIn(!!user);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+    navigate("/"); // back to home
+  };
+
   return (
     <div className="relative w-full h-full overflow-hidden font-sans">
-      {/* 🔸 Background Video */}
       <video
         className="fixed top-0 left-0 w-full h-full object-cover z-0"
         src={heroVideo}
@@ -150,10 +121,8 @@ export default function Home() {
         loop
         playsInline
       />
-      {/* 🔸 Overlay */}
       <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-b from-black/70 via-black/30 to-white/10 z-10" />
 
-      {/* 🔸 Foreground Content */}
       <div className="relative z-20">
         <Navbar />
 
@@ -175,7 +144,8 @@ export default function Home() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              Empowering kids, informing parents, supporting schools.
+              An Initiative to help <br/>
+               the Younger Generations <br/> to stay Humane in the AI world
             </motion.p>
 
             <motion.div
@@ -183,25 +153,44 @@ export default function Home() {
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <Link
-                to="/test"
-                className="bg-[#F25C5C] hover:bg-red-600 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block"
-              >
-                🚀 Start Self-Test
-              </Link>
+              {!isLoggedIn ? (
+                <Link
+                  to="/login"
+                  className="bg-white text-[#F25C5C] border-2 border-[#F25C5C] hover:bg-[#F25C5C] hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block"
+                >
+                  🔐 Join Us
+                </Link>
+              ) : (
+                <>
+
+                <p className="mb-4">Start your DIGITAL DETOX journey with SURAKSHA BUDDY</p>
+                  <Link
+                    to="/test"
+                    className="bg-[#F25C5C] hover:bg-red-600 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block"
+                  >
+                    🚀 Start Self-Test
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="text-white ml-3 bg-white bg-opacity-50 hover:bg-opacity-75 px-4 py-2 rounded-full text-sm transition"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
             </motion.div>
           </div>
         </section>
 
         {/* Intro */}
-        <section className="py-16 bg-white/50 backdrop-blur-md text-gray-800 text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-10 mb-10 relative z-40">
+        <section className="py-16 bg-white/70 backdrop-blur-md text-gray-800 text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-10 mb-10 relative z-40">
           <motion.div
             className="max-w-5xl mx-auto text-center px-6"
             initial={{ y: 40, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-[#297AA2] mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#215f7d] mb-4">
               Welcome to <span className="text-[#215f7d]">Suraksha Buddy</span>
             </h2>
             <p className="text-gray-700 text-lg">
@@ -212,64 +201,74 @@ export default function Home() {
         </section>
 
         {/* Services */}
-        <section className="bg-white/70 py-16">
-          <div className="max-w-7xl mx-auto px-6">
-            <motion.h3
-              className="text-3xl md:text-4xl font-bold text-center text-[#297AA2] mb-12"
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              💡 What We Offer
-            </motion.h3>
+<section className="bg-white/70 py-16">
+  <div className="max-w-7xl mx-auto px-6">
+    <motion.h3
+      className="text-3xl md:text-4xl font-bold text-center text-[#215f7d] mb-12"
+      initial={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      💡 What We Offer
+    </motion.h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Self-Test",
-                  desc: "Evaluate your digital well-being with our cyber psychology self-assessment.",
-                  link: "/test",
-                  color: "#F25C5C",
-                  emoji: "🧠",
-                },
-                {
-                  title: "Detox Toolkit",
-                  desc: "Access actionable tools and tips for a healthier online life.",
-                  link: "/toolkit",
-                  color: "#F2B705",
-                  emoji: "🧰",
-                },
-                {
-                  title: "Mentor Talk",
-                  desc: "Get guidance and support from digital wellness mentors.",
-                  link: "/chat",
-                  color: "#5EC66C",
-                  emoji: "🎓",
-                },
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-white/80 rounded-2xl shadow-xl p-8 text-center border hover:shadow-2xl transition"
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="text-4xl mb-4">{item.emoji}</div>
-                  <h4 className="text-xl font-semibold mb-2 text-[#213547]">
-                    {item.title}
-                  </h4>
-                  <p className="mb-6 text-sm text-gray-600">{item.desc}</p>
-                  <Link
-                    to={item.link}
-                    className="inline-block mt-auto text-white font-semibold px-5 py-2 rounded-full text-sm"
-                    style={{ backgroundColor: item.color }}
-                  >
-                    Explore →
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      {[
+        {
+          title: "Self-Test",
+          desc: "Evaluate your digital well-being with our cyber psychology self-assessment.",
+          link: "/test",
+          color: "#F25C5C",
+          emoji: "🧠",
+        },
+        {
+          title: "Detox Toolkit",
+          desc: "Access actionable tools and tips for a healthier online life.",
+          link: "/toolkit",
+          color: "#F2B705",
+          emoji: "🧰",
+        },
+        {
+          title: "Talk to your Suraksha Buddy",
+          desc: "Get guidance and support from digital wellness mentors.",
+          link: "/chat",
+          color: "#5EC66C",
+          emoji: "🎓",
+        },
+        {
+          title: "Register With Us",
+          desc: "Join as counselors, volunteers, or mentors to help others.",
+          link: "/register-mentor",
+          color: "#297AA2",
+          emoji: "📋",
+        },
+      ].map((item, index) => (
+        <motion.div
+          key={index}
+          className="bg-white rounded-2xl shadow-md border border-gray-200 hover:shadow-xl transition-transform transform hover:-translate-y-1 p-8 text-center"
+          whileHover={{ scale: 1.03 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="text-5xl mb-4">{item.emoji}</div>
+          <h4 className="text-xl font-semibold mb-2 text-[#213547]">{item.title}</h4>
+          <p className="mb-6 text-sm text-gray-600">{item.desc}</p>
+          <Link
+            to={
+              !isLoggedIn && ["/test", "/chat", "/toolkit"].includes(item.link)
+                ? "/login"
+                : item.link
+            }
+            className="inline-block mt-auto font-semibold text-white px-5 py-2 rounded-full text-sm transition-shadow shadow-sm hover:shadow-md"
+            style={{ backgroundColor: item.color }}
+          >
+            Explore →
+          </Link>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</section>
+
 
         {/* Tagline */}
         <section className="py-16 px-6 bg-[#297AA2] text-white text-center">

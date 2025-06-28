@@ -1,16 +1,23 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { motion } from "framer-motion";
 import contactImg from "../assets/contact-illustration.jpeg";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ContactUs() {
-  const [submitted, setSubmitted] = useState(false);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
+    toast.success("✅ Submitted successfully! We'll get back to you soon.", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "colored",
+    });
     e.target.reset();
   };
 
@@ -19,7 +26,7 @@ export default function ContactUs() {
       <Navbar />
       <section className="pt-20 pb-16 px-4 bg-gradient-to-br from-[#fff5f5] via-white to-[#fff5f5] text-gray-800 scroll-smooth">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 items-start">
-          {/* Image Section */}
+          {/* 🔸 Image + Info Section */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -32,10 +39,16 @@ export default function ContactUs() {
               className="rounded-xl shadow-lg w-56 h-56 object-cover mb-4"
             />
             <h2 className="text-3xl font-bold">
-              <span className="text-red-500">Contact</span> <span className="text-gray-700">Us</span>
+              <span className="text-red-500">Contact</span>{" "}
+              <span className="text-gray-700">Us</span>
             </h2>
             <p className="mt-3 text-sm text-gray-600 max-w-sm">
-              Questions or suggestions? We're just a message away!
+              Have any questions, suggestions, or feedback? We're happy to hear
+              from you! You can email us at{" "}
+              <span className="text-red-600 font-semibold">
+                support@cyberwellness.ai
+              </span>{" "}
+              or fill out the form below.
             </p>
             <ul className="mt-4 text-xs text-gray-700 space-y-1">
               <li>📍 TechPark, Bangalore</li>
@@ -44,27 +57,20 @@ export default function ContactUs() {
             </ul>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* 🔸 Contact Form */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl w-full max-w-md mx-auto lg:col-span-2"
           >
-            <h3 className="text-xl font-bold text-center text-red-500 mb-1">Let's Talk</h3>
+            <h3 className="text-xl font-bold text-center text-red-500 mb-1">
+              Let’s Talk
+            </h3>
             <p className="text-xs text-center text-gray-600 mb-4">
-              Fill out the form below and we’ll get back to you soon.
+              Please fill out the form below and we’ll respond as soon as
+              possible.
             </p>
-
-            {/* Success Message */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={submitted ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className={`mb-3 text-xs text-green-700 bg-green-100 border border-green-300 px-3 py-1 rounded-md ${submitted ? "block" : "hidden"}`}
-            >
-              ✅ Submitted successfully!
-            </motion.div>
 
             <form onSubmit={handleSubmit} className="space-y-3">
               <input
@@ -87,12 +93,18 @@ export default function ContactUs() {
                 placeholder="Subject"
                 className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
               />
+              <input
+                type="text"
+                name="query"
+                required
+                placeholder="Your Query"
+                className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+              />
               <textarea
                 name="message"
-                required
                 rows="3"
-                placeholder="Your Message"
-                className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+                placeholder="Additional Message (optional)"
+                className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 resize-none"
               ></textarea>
               <button
                 type="submit"
@@ -105,6 +117,7 @@ export default function ContactUs() {
         </div>
       </section>
       <Footer />
+      <ToastContainer />
     </>
   );
-} 
+}

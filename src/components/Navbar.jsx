@@ -1,13 +1,12 @@
 // src/components/Navbar.jsx
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -15,16 +14,11 @@ export default function Navbar() {
     setIsLoggedIn(!!user);
   }, [location]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
-    navigate("/login");
-  };
-
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/about", label: "About Us" },
-    { to: "/services", label: "Services" },
+    { to: "/infodesk", label: "InfoDesk" },
+    { to: "/team", label: "Our Team" },
     { to: "/contact", label: "Contact" },
   ];
 
@@ -37,7 +31,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
         {/* Logo */}
-        <Link to="/" className="text-xl font-bold text-grey-500">
+        <Link to="/" className="flex items-center gap-2 text-xl font-bold text-gray-700">
           Suraksha Buddy
         </Link>
 
@@ -64,22 +58,6 @@ export default function Navbar() {
             >
               Score History
             </Link>
-          )}
-
-          {!isLoggedIn ? (
-            <Link
-              to="/login"
-              className="bg-[#297AA2] text-white px-4 py-1 rounded hover:bg-[#215f7d]"
-            >
-              Login
-            </Link>
-          ) : (
-            <button
-              onClick={handleLogout}
-              className="bg-[#F25C5C] text-white px-4 py-1 rounded hover:bg-red-600"
-            >
-              Logout
-            </button>
           )}
         </nav>
 
@@ -119,28 +97,6 @@ export default function Navbar() {
                 Score History
               </Link>
             )}
-
-            <div className="pt-3">
-              {!isLoggedIn ? (
-                <Link
-                  to="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full bg-[#297AA2] text-white px-4 py-2 rounded-md mx-auto max-w-xs"
-                >
-                  Login
-                </Link>
-              ) : (
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsOpen(false);
-                  }}
-                  className="block w-full bg-[#F25C5C] text-white px-4 py-2 rounded-md mx-auto max-w-xs"
-                >
-                  Logout
-                </button>
-              )}
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

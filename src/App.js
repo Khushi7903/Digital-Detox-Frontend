@@ -10,6 +10,9 @@ import ScoresPage from "./pages/ScoresPage";
 import Toolkit from "./pages/Toolkit";
 import ChatPage from "./pages/ChatPage";
 import ProtectedRoute from "./components/ProtectedRoute"; // Adjust path if needed
+import RegisterMentor from "./pages/RegisterMentot";
+import InfoDesk from "./pages/InfoDesk";
+import OurTeam from "./pages/OurTeam";
 
 
 export default function App() {
@@ -26,6 +29,9 @@ export default function App() {
           <Route path="/result" element={<ResultPage />} />
           <Route path="/score-history" element={<ScoresPage />} />
           <Route path="/toolkit" element={<Toolkit />} />
+          <Route path="register-mentor" element={<RegisterMentor />} />
+          <Route path="infodesk" element={<InfoDesk />} />
+          <Route path="team" element={<OurTeam />} />
           <Route
             path="/chat"
             element={

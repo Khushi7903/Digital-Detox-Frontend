@@ -13,9 +13,9 @@ import {
   PointElement,
   Tooltip,
   Legend,
-  Title
+  Title,
 } from "chart.js";
-import { BASE_URL } from "../config.js"
+import { BASE_URL } from "../config.js";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 
@@ -47,9 +47,9 @@ export default function ScoresPage() {
   const getBadge = () => {
     if (scores.length === 0) return "No Badge Yet";
     const highest = Math.max(...scores.map((s) => s.score));
-    if (highest <= 45) return "Zen Starter";
-    else if (highest <= 70) return "FOMO Fighter";
-    else return "Detox Hero";
+    if (highest <= 45) return "🥉 Bronze Star";
+    else if (highest <= 70) return "🥈 Silver Star";
+    else return "🥇 Golden Star";
   };
 
   const lineChartData = {
@@ -58,9 +58,10 @@ export default function ScoresPage() {
       {
         label: "Score",
         data: scores.map((s) => s.score),
-        borderColor: "#06b6d4",
+        borderColor: "#ef4444", // red-500
+        backgroundColor: "#fee2e2", // red-100
         tension: 0.4,
-        fill: false,
+        fill: true,
       },
     ],
   };
@@ -75,8 +76,8 @@ export default function ScoresPage() {
           scores.filter((s) => s.zone.includes("Warning")).length,
           scores.filter((s) => s.zone.includes("Danger")).length,
         ],
-        backgroundColor: ["#10b981", "#facc15", "#ef4444"],
-        borderColor: ["#047857", "#eab308", "#dc2626"],
+        backgroundColor: ["#16a34a", "#eab308", "#dc2626"],
+        borderColor: ["#065f46", "#ca8a04", "#b91c1c"],
         borderWidth: 1,
       },
     ],
@@ -92,81 +93,93 @@ export default function ScoresPage() {
   };
 
   return (
-    <><Navbar />
-    <section className="min-h-screen bg-gradient-to-br from-white via-cyan-50 to-white px-4 py-16">
-      <motion.div
-        className="max-w-5xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h2 className="text-3xl font-bold text-center text-cyan-700 mb-6">📊 Your Score History</h2>
-
-        {/* Badge */}
-        <div className="text-center mb-6">
-          <h3 className="text-xl font-semibold text-gray-800">🏅 Badge Earned</h3>
-          <p className="text-cyan-600 text-lg">{getBadge()}</p>
-        </div>
-
-        {/* Chart Area */}
-        <div
-          ref={chartRef}
-          className="flex flex-col md:flex-row justify-between items-start gap-6 mb-10"
+    <>
+      <Navbar />
+      <section className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-100 px-4 py-16">
+        <motion.div
+          className="max-w-5xl mx-auto bg-white/90 backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-red-200"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="bg-white p-4 rounded-lg shadow w-full md:w-1/2">
-            <h4 className="font-medium text-center text-gray-600 mb-2">Line Chart</h4>
-            <div className="h-[200px]">
-              <Line
-                data={lineChartData}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                }} />
-            </div>
-          </div>
+          <h2 className="text-3xl font-bold text-center text-red-600 mb-6">
+            🌟 Your Score Summary
+          </h2>
 
-          <div className="bg-white p-4 rounded-lg shadow w-full md:w-1/2">
-            <h4 className="font-medium text-center text-gray-600 mb-2">Pie Chart</h4>
-            <div className="h-[200px]">
-              <Pie
-                data={pieData}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                }} />
-            </div>
-          </div>
-        </div>
-
-        {/* Score Cards */}
-        <div className="grid gap-4">
-          {scores.map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="bg-white/90 p-4 rounded shadow-md"
+          {/* Badge */}
+          <div className="text-center mb-8">
+            <h3 className="text-xl font-semibold text-gray-700 mb-1">🎖 Earned Badge</h3>
+            <motion.p
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="text-red-500 text-2xl font-bold"
             >
-              <p><strong>Score:</strong> {s.score} ({s.zone})</p>
-              <p><strong>Feedback:</strong> {s.feedback}</p>
-              <p className="text-gray-500 text-sm">{new Date(s.createdAt).toLocaleString()}</p>
-            </motion.div>
-          ))}
-        </div>
+              {getBadge()}
+            </motion.p>
+          </div>
 
-        {/* PDF Button */}
-        <div className="text-center mt-10">
-          <button
-            onClick={downloadPDF}
-            className="bg-cyan-600 text-white px-6 py-2 rounded hover:bg-cyan-700 transition"
+          {/* Chart Area */}
+          <div
+            ref={chartRef}
+            className="flex flex-col md:flex-row justify-between items-start gap-6 mb-10"
           >
-            📄 Download PDF Report
-          </button>
-        </div>
-      </motion.div>
-    </section>
-    <Footer/>
+            <div className="bg-white p-4 rounded-lg shadow w-full md:w-1/2 border">
+              <h4 className="font-medium text-center text-gray-600 mb-2">📈 Progress Over Time</h4>
+              <div className="h-[200px]">
+                <Line
+                  data={lineChartData}
+                  options={{ responsive: true, maintainAspectRatio: false }}
+                />
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow w-full md:w-1/2 border">
+              <h4 className="font-medium text-center text-gray-600 mb-2">📊 Zone Breakdown</h4>
+              <div className="h-[200px]">
+                <Pie
+                  data={pieData}
+                  options={{ responsive: true, maintainAspectRatio: false }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Score Cards */}
+          <div className="grid gap-4">
+            {scores.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="bg-white/95 p-4 rounded-xl border shadow-sm"
+              >
+                <p className="font-medium text-gray-800">
+                  <strong>Score:</strong> {s.score} (<span className="capitalize">{s.zone}</span>)
+                </p>
+                <p className="text-gray-700 text-sm">
+                  <strong>Feedback:</strong> {s.feedback}
+                </p>
+                <p className="text-gray-500 text-xs mt-1">
+                  {new Date(s.createdAt).toLocaleString()}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* PDF Button */}
+          <div className="text-center mt-10">
+            <button
+              onClick={downloadPDF}
+              className="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition"
+            >
+              📄 Download PDF Report
+            </button>
+          </div>
+        </motion.div>
+      </section>
+      <Footer />
     </>
   );
 }
