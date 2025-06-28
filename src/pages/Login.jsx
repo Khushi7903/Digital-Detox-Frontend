@@ -10,26 +10,14 @@ import { FaUser, FaEnvelope, FaLock, FaIdCard } from "react-icons/fa";
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [role, setRole] = useState("student");
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    id: "",
-    phone: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", password: "", id: "" });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleToggle = () => {
     setIsLogin(!isLogin);
     setMessage("");
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-      id: "",
-      phone: "",
-    });
+    setFormData({ name: "", email: "", password: "", id: "" });
   };
 
   const handleChange = (e) => {
@@ -38,20 +26,32 @@ export default function AuthPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isLogin
-      ? `${BASE_URL}/api/auth/login`
-      : `${BASE_URL}/api/auth/signup`;
+    const url = isLogin ? `${BASE_URL}/api/auth/login` : `${BASE_URL}/api/auth/signup`;
+    
+    const payload = isLogin
+      ? { email: formData.email, password: formData.password, role }
+      : { ...formData, role };
 
     try {
-      const res = await axios.post(url, { ...formData, role });
+      const res = await axios.post(url, payload);
       setMessage(res.data.message);
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ id: formData.id, role, email: formData.email })
-      );
+      if (isLogin) {
+        localStorage.setItem("user", JSON.stringify({
+          id: formData.id,
+          role,
+          email: formData.email,
+        }));
 
-      setTimeout(() => navigate("/"), 1000);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          setIsLogin(true); // After signup, go to login screen
+          setMessage("Account created! Please log in.");
+        }, 1000);
+      }
     } catch (err) {
       setMessage(err.response?.data?.message || "Something went wrong.");
     }
@@ -68,20 +68,15 @@ export default function AuthPage() {
           className="max-w-md w-full bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6"
         >
           <h2 className="text-2xl font-bold text-center">
-            <span className="text-red-500">
-              {isLogin ? "Login" : "Sign Up"}
-            </span>
+            <span className="text-red-500">{isLogin ? "Login" : "Sign Up"}</span>{" "}
+            <span className="text-gray-700">as {role.charAt(0).toUpperCase() + role.slice(1)}</span>
           </h2>
 
           <div className="flex justify-center gap-4">
-            {["student", "teacher", "parent"].map((r) => (
+            {["student", "teacher"].map((r) => (
               <button
                 key={r}
-                className={`px-4 py-1 rounded-full border text-sm font-medium transition ${
-                  role === r
-                    ? "bg-red-500 text-white"
-                    : "border-red-500 text-red-500 hover:bg-red-100"
-                }`}
+                className={`px-4 py-1 rounded-full border text-sm font-medium transition ${role === r ? "bg-red-500 text-white" : "border-red-500 text-red-500 hover:bg-red-100"}`}
                 onClick={() => setRole(r)}
               >
                 {r.charAt(0).toUpperCase() + r.slice(1)}
@@ -104,33 +99,18 @@ export default function AuthPage() {
                 />
               </div>
             )}
-
             <div className="relative">
               <FaIdCard className="absolute left-3 top-3 text-gray-400" />
               <input
                 type="text"
                 name="id"
-                placeholder={`${role.charAt(0).toUpperCase() + role.slice(1)} ID`}
+                placeholder={`${role === "student" ? "Student" : "Teacher"} ID`}
                 value={formData.id}
                 required
                 onChange={handleChange}
                 className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
               />
             </div>
-
-            <div className="relative">
-              <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
-              <input
-                type="number"
-                name="phone"
-                placeholder="Phone Number"
-                value={formData.phone}
-                required
-                onChange={handleChange}
-                className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
-              />
-            </div>
-
             <div className="relative">
               <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
               <input
@@ -143,7 +123,6 @@ export default function AuthPage() {
                 className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
               />
             </div>
-
             <div className="relative">
               <FaLock className="absolute left-3 top-3 text-gray-400" />
               <input
@@ -156,7 +135,6 @@ export default function AuthPage() {
                 className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
               />
             </div>
-
             <button
               type="submit"
               className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
@@ -166,7 +144,9 @@ export default function AuthPage() {
           </form>
 
           {message && (
-            <p className="text-sm text-center text-red-600 mt-2">{message}</p>
+            <p className="text-sm text-center text-red-600 mt-2">
+              {message}
+            </p>
           )}
 
           <p className="text-xs text-center text-gray-600 mt-4">
