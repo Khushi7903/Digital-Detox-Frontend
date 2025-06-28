@@ -1,1 +1,1 @@
-export const BASE_URL = "https://digital-detox-backend-1.onrender.com";
+export const BASE_URL = "https://surakshabuddy-backend.onrender.com/";

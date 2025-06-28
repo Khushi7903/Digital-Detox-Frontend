@@ -11,43 +11,43 @@ import khushi from "../assets/Khushi.jpg";
 const teamMembers = [
   {
     name: "Advocate Shonan K Mahajan",
-    prole: "Cyber Expert",
-    role: "Suraksha Buddy",
+    prole: "Cyber Warrior",
+    // role: "Suraksha Buddy",
     image: ShonanMam,
     bio: "Dedicated to spread awareness for Digital Safety and Digital Rights among Organizations, communities, Schools, Universities."
   },
   {
     name: "Ms Rashmi Malik",
     prole: "Educationist, Counsellor and Cyber Warrior",
-    role: "Suraksha Buddy",
+    // role: "Suraksha Buddy",
     image: principalMam,
     bio: "A seasoned educationist with over 27 years of experience and a Postgraduate degree in Information Technology."
   },
   {
     name: "Aastha",
     prole: "Cyber Warrior | Forensic Science Graduate",
-    role: "Suraksha Buddy",
+    // role: "Suraksha Buddy",
     image: aasthu,
     bio: "A Forensic Science graduate from Amity University, Noida, with a strong interest in cyber security, digital safety, and community-focused cyber awareness."
   },
   {
     name: "Mahi Chopra",
     prole: "B.Tech Graduate in Cyber Security",
-    role: "Suraksha Buddy",
+    // role: "Suraksha Buddy",
     image: mahi,
     bio: "A B.Tech graduate in Cybersecurity with a strong technical background and a deep interest in securing digital systems."
   },
   {
     name: "Vansh Sahni",
     prole: "Life Coach | Cyber Warrior",
-    role: "Suraksha Buddy",
+    // role: "Suraksha Buddy",
     image: vansh,
     bio: "A Psychology Honours graduate from the University of Delhi, equipped with strong research acumen and practical experience in diverse psychological domains."
   },
   {
     name: "Khushi",
     prole: "Khushi | B.Tech CSE | Full Stack Developer",
-    role: "Suraksha Buddy",
+    // role: "Suraksha Buddy",
     image: khushi,
     bio: "B.Tech CSE student and Full Stack Developer. Dedicated to continuous learning and innovative problem-solving."
   }

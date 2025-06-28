@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/Footer";
 import heroVideo from "../assets/cyber-bg.mp4";
+import shield from "../assets/suraksha.png";
 
 // 🔹 Navbar Component Inside Same File
 function Navbar() {
@@ -129,14 +130,22 @@ export default function Home() {
         {/* Hero */}
         <section className="w-full h-screen flex items-center justify-start px-6 md:px-20 text-left">
           <div className="text-white max-w-3xl mt-24 space-y-6">
-            <motion.h1
-              className="text-2xl sm:text-3xl font-bold leading-tight"
-              initial={{ x: -100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              Suraksha Buddy
-            </motion.h1>
+<div className="flex items-center space-x-3">
+  <img
+    src={shield}
+    alt="Shield Icon"
+    className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
+  />
+  <motion.h1
+    className="text-2xl sm:text-3xl font-bold leading-tight text-[#D4AF37]"
+    initial={{ x: -100, opacity: 0 }}
+    animate={{ x: 0, opacity: 1 }}
+    transition={{ duration: 0.8 }}
+  >
+    Suraksha Buddy
+  </motion.h1>
+</div>
+
 
             <motion.p
               className="text-3xl sm:text-4xl md:text-5xl leading-tight"
@@ -144,7 +153,7 @@ export default function Home() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              An Initiative to help <br/>
+              An <i>Initiative</i> to help <br/>
                the Younger Generations <br/> to stay Humane in the AI world
             </motion.p>
 
