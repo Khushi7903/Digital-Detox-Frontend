@@ -73,7 +73,7 @@ export default function AuthPage() {
           </h2>
 
           <div className="flex justify-center gap-4">
-            {["student", "teacher"].map((r) => (
+            {["student", "teacher","parent"].map((r) => (
               <button
                 key={r}
                 className={`px-4 py-1 rounded-full border text-sm font-medium transition ${role === r ? "bg-red-500 text-white" : "border-red-500 text-red-500 hover:bg-red-100"}`}
