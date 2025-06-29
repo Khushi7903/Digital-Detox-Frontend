@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { motion } from "framer-motion";
 import contactImg from "../assets/contact-illustration.jpeg";
 import Navbar from "../components/Navbar";
@@ -7,18 +6,43 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ContactUs() {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success("✅ Submitted successfully! We'll get back to you soon.", {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "colored",
-    });
-    e.target.reset();
+
+    const formData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      subject: e.target.subject.value,
+      query: e.target.query.value,
+      message: e.target.message.value,
+    };
+
+    try {
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        toast.success("✅ Submitted successfully! We'll get back to you soon.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+        e.target.reset();
+      } else {
+        toast.error(`❌ ${data.error || "Submission failed. Please try again."}`);
+      }
+    } catch (error) {
+      toast.error("❌ Server error. Please try again later.");
+    }
   };
 
   return (
@@ -43,17 +67,16 @@ export default function ContactUs() {
               <span className="text-gray-700">Us</span>
             </h2>
             <p className="mt-3 text-sm text-gray-600 max-w-sm">
-              Have any questions, suggestions, or feedback? We're happy to hear
-              from you! You can email us at{" "}
+              Don't want to talk to a counselor? No worries! Just fill this form,
+              and we'll get back to you via email. You can also write to us at{" "}
               <span className="text-red-600 font-semibold">
-                support@cyberwellness.ai
-              </span>{" "}
-              or fill out the form below.
+                Surakshabuddyindia@gmail.com
+              </span>
+              .
             </p>
             <ul className="mt-4 text-xs text-gray-700 space-y-1">
-              <li>📍 TechPark, Bangalore</li>
-              <li>📧 support@cyberwellness.ai</li>
-              <li>📞 +91 98765 43210</li>
+              <li>📍 Delhi, India</li>
+              <li>📧 Surakshabuddyindia@gmail.com</li>
             </ul>
           </motion.div>
 
@@ -65,11 +88,11 @@ export default function ContactUs() {
             className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl w-full max-w-md mx-auto lg:col-span-2"
           >
             <h3 className="text-xl font-bold text-center text-red-500 mb-1">
-              Let’s Talk
+              Just Reach Out
             </h3>
             <p className="text-xs text-center text-gray-600 mb-4">
-              Please fill out the form below and we’ll respond as soon as
-              possible.
+              Fill this short form to share your concern, and we’ll reply via email
+              — no sessions, no pressure.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-3">

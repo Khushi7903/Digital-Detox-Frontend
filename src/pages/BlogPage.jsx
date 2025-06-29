@@ -1,0 +1,138 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { blogs } from "../assets/data/blogs";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
+// ✅ Image imports
+import kidsImage from "../assets/kids.jpg";
+import cyberImage from "../assets/cyberSecurity.jpg";
+
+export default function BlogPage() {
+  const [search, setSearch] = useState("");
+
+  const filteredBlogs = blogs.filter(
+    (blog) =>
+      blog.title.toLowerCase().includes(search.toLowerCase()) ||
+      blog.content.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const kidsBlogs = filteredBlogs.filter(
+    (blog) => blog.category === "Digital Wellness"
+  );
+
+  const cyberBlogs = filteredBlogs.filter(
+    (blog) => blog.category === "Cyber Psychology"
+  );
+
+  return (
+    <>
+      <Navbar />
+      <div className="min-h-screen px-4 md:px-20 py-12 mt-8 bg-gradient-to-b from-white via-blue-50 to-white text-gray-800 font-sans">
+        <motion.h1
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl sm:text-4xl font-bold text-center mb-10 text-cyan-700"
+        >
+          📚 Blogs & Articles
+        </motion.h1>
+
+        {/* 🔍 Search */}
+        <div className="mb-12 text-center">
+          <input
+            type="text"
+            placeholder="🔍 Search articles..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full sm:w-3/4 md:w-1/2 px-4 py-2 rounded-full border border-blue-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-300"
+          />
+        </div>
+
+        {/* 👧 Kids Section */}
+        <section className="mb-20">
+          <div className="flex flex-col md:flex-row items-center gap-6 mb-6">
+            <img
+              src={kidsImage}
+              alt="Kids Digital Wellness"
+              className="w-full max-w-[400px] object-cover rounded-xl shadow-md"
+            />
+            <div className="text-center md:text-left">
+              <h2 className="text-2xl md:text-3xl font-bold text-yellow-500 mb-2">
+                👧 Stories for Kids
+              </h2>
+              <p className="text-gray-600">
+                Simple and relatable rhymes to teach children about digital habits.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6">
+            {kidsBlogs.map((blog, index) => (
+              <motion.div
+                key={blog.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white/60 backdrop-blur border border-blue-300 rounded-xl p-5 shadow-md transition hover:shadow-lg"
+              >
+                <h3 className="text-lg font-semibold text-cyan-800 mb-2">{blog.title}</h3>
+                <p className="text-sm text-gray-700 line-clamp-3">{blog.content}</p>
+                <Link
+                  to={`/blogs/${blog.id}`}
+                  className="inline-block mt-3 text-sm text-blue-600 hover:underline"
+                >
+                  🔗 Read More
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* 🧠 Cyber Psychology Section */}
+        <section className="mb-20">
+          <div className="flex flex-col md:flex-row-reverse items-center gap-6 mb-6">
+            <img
+              src={cyberImage}
+              alt="Cyber Psychology"
+              className="w-full max-w-[400px] object-cover rounded-xl shadow-md"
+            />
+            <div className="text-center md:text-left">
+              <h2 className="text-2xl md:text-3xl font-bold text-cyan-700 mb-2">
+                🧠 Cyber Psychology Insights
+              </h2>
+              <p className="text-gray-600">
+                Explore the science behind screen time, gaming, online friendships, and more.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6">
+            {cyberBlogs.map((blog, index) => (
+              <motion.div
+                key={blog.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white/60 backdrop-blur border border-cyan-300 rounded-xl p-5 shadow-md transition hover:shadow-lg"
+              >
+                <h3 className="text-lg font-semibold text-cyan-800 mb-2">{blog.title}</h3>
+                <p className="text-sm text-gray-700 line-clamp-3">{blog.content}</p>
+                <Link
+                  to={`/blogs/${blog.id}`}
+                  className="inline-block mt-3 text-sm text-blue-600 hover:underline"
+                >
+                  🔗 Read More
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      </div>
+      <Footer />
+    </>
+  );
+}

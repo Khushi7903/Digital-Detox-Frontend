@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaInstagram, FaLinkedin, FaTwitter, FaGithub } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaTwitter, FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -27,16 +27,16 @@ export default function Footer() {
           transition={{ delay: 0.4 }}
           className="flex space-x-5 text-[#297AA2] text-xl"
         >
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F25C5C] transition">
-            <FaGithub />
+          <a href=" https://www.facebook.com/profile.php?id=61577907779362 " target="_blank" rel="noopener noreferrer" className="hover:text-[#F25C5C] transition">
+            <FaFacebook />
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#5EC66C] transition">
+          <a href=" http://linkedin.com/in/suraksha-buddy- " target="_blank" rel="noopener noreferrer" className="hover:text-[#5EC66C] transition">
             <FaLinkedin />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F2B705] transition">
+          <a href=" https://mobile.x.com/Suraksha_Buddy " target="_blank" rel="noopener noreferrer" className="hover:text-[#F2B705] transition">
             <FaTwitter />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F25C5C] transition">
+          <a href=" https://www.instagram.com/suraksha_buddy/" target="_blank" rel="noopener noreferrer" className="hover:text-[#F25C5C] transition">
             <FaInstagram />
           </a>
         </motion.div>

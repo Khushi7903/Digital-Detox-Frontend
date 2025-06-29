@@ -6,6 +6,11 @@ import Footer from "../components/Footer";
 import heroVideo from "../assets/cyber-bg.mp4";
 import shield from "../assets/suraksha.png";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
 // 🔹 Navbar Component Inside Same File
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -106,11 +111,18 @@ export default function Home() {
     setIsLoggedIn(!!user);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
-    navigate("/"); // back to home
-  };
+const handleLogout = () => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+  setIsLoggedIn(false);
+  navigate("/");
+};
+
+useEffect(() => {
+  const user = localStorage.getItem("user");
+  setIsLoggedIn(!!user);
+}, []);
+
 
   return (
     <div className="relative w-full h-full overflow-hidden font-sans">
@@ -279,23 +291,121 @@ export default function Home() {
 </section>
 
 
-        {/* Tagline */}
-        <section className="py-16 px-6 bg-[#297AA2] text-white text-center">
+<section className="py-16 bg-white/70 backdrop-blur-md text-gray-700">
+  <div className="max-w-6xl mx-auto px-4">
+    <motion.h3
+      className="text-2xl md:text-3xl font-bold text-center text-[#215f7d] mb-10"
+      initial={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      ❓ Frequently Asked Questions
+    </motion.h3>
+
+    <Swiper
+      modules={[Autoplay, Navigation]}
+      slidesPerView={1}
+      spaceBetween={20}
+      navigation={{
+        nextEl: ".faq-button-next",
+        prevEl: ".faq-button-prev",
+      }}
+      autoplay={{ delay: 7000, disableOnInteraction: false }}
+      breakpoints={{
+        640: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      }}
+      className="relative pb-12"
+    >
+      {[
+        {
+          q: "What is Suraksha Buddy?",
+          a: "A fun tool that helps students check how online life affects mood, sleep, and focus.",
+        },
+        {
+          q: "Who can use this portal?",
+          a: "School and college students, with supportive parents and teachers.",
+        },
+        {
+          q: "Is the self-test free?",
+          a: "Yes! It’s completely free with no sign-up fees.",
+        },
+        {
+          q: "What happens after I take the test?",
+          a: "You get a result in Silver, Bronze, or Golden Star with helpful suggestions.",
+        },
+        {
+          q: "What is the Detox Toolkit?",
+          a: "A collection of mini activities to help you relax and enjoy time offline.",
+        },
+        {
+          q: "Is my score private?",
+          a: "Yes, results are private unless you choose to share them.",
+        },
+      ].map((item, index) => (
+        <SwiperSlide key={index}>
           <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            viewport={{ once: true }}
+            className="h-[160px] max-w-[260px] mx-auto bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl p-4 text-center shadow hover:shadow-md transition duration-300 flex flex-col justify-center"
           >
-            <h3 className="text-2xl sm:text-3xl font-bold mb-3">
-              🌐 Let’s Reclaim Our Digital Well-being Together
-            </h3>
-            <p className="text-sm sm:text-base text-gray-200">
-              Join hands with mentors, kids, families, and schools to build a cyber-safe
-              future for the next generation.
-            </p>
+            <h4 className="text-base font-semibold text-[#F25C5C]">
+              {item.q}
+            </h4>
+            <p className="text-sm text-gray-700">{item.a}</p>
           </motion.div>
-        </section>
+        </SwiperSlide>
+      ))}
+
+      {/* Custom small red arrows */}
+      <div className="faq-button-prev absolute left-0 top-[45%] z-10 w-7 h-7 rounded-full bg-[#F25C5C] text-white text-sm flex items-center justify-center cursor-pointer shadow hover:scale-105 transition">
+        ‹
+      </div>
+      <div className="faq-button-next absolute right-0 top-[45%] z-10 w-7 h-7 rounded-full bg-[#F25C5C] text-white text-sm flex items-center justify-center cursor-pointer shadow hover:scale-105 transition">
+        ›
+      </div>
+    </Swiper>
+
+    <div className="mt-8 text-center">
+      <Link
+        to="/faqs"
+        className="inline-block bg-[#F25C5C] text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-red-600 transition"
+      >
+        View All FAQs →
+      </Link>
+    </div>
+  </div>
+</section>
+
+
+{/* Tagline for Blogs & Videos */}
+<section className="relative py-16 px-6 bg-[#297AA2] text-white text-center overflow-hidden">
+  <motion.div
+    initial={{ y: 30, opacity: 0 }}
+    whileInView={{ y: 0, opacity: 1 }}
+    transition={{ duration: 0.6 }}
+    className="max-w-3xl mx-auto"
+  >
+    <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-snug">
+      📺 Explore Real Stories, Stay Aware
+    </h3>
+    <p className="text-sm sm:text-base text-gray-200 px-2">
+      Discover blogs and videos based on real-life cyber cases. Learn from real stories,
+      understand online risks, and empower yourself to make safer digital choices.
+    </p>
+  </motion.div>
+
+  {/* Button centered at bottom */}
+  <Link
+    to="/blogs"
+    className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white text-[#297AA2] hover:bg-gray-100 font-semibold px-5 py-2 rounded-full text-sm shadow-md transition items-center justify-center flex"
+  >
+    📚 Explore Blog & Videos →
+  </Link>
+</section>
 
         <Footer />
       </div>

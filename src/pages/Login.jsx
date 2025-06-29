@@ -1,163 +1,175 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "../config.js";
-import Navbar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaUser, FaEnvelope, FaLock, FaIdCard } from "react-icons/fa";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
-export default function AuthPage() {
-  const [isLogin, setIsLogin] = useState(true);
+const AuthPage = () => {
+  const [step, setStep] = useState("signup");
   const [role, setRole] = useState("student");
-  const [formData, setFormData] = useState({ name: "", email: "", password: "", id: "" });
-  const [message, setMessage] = useState("");
+  const [userId, setUserId] = useState(localStorage.getItem("pendingUserId") || "");
+  const [otp, setOtp] = useState("");
+  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
+
   const navigate = useNavigate();
 
-  const handleToggle = () => {
-    setIsLogin(!isLogin);
-    setMessage("");
-    setFormData({ name: "", email: "", password: "", id: "" });
+  useEffect(() => {
+    if (userId) {
+      localStorage.setItem("pendingUserId", userId);
+    }
+  }, [userId]);
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSignup = async () => {
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/signup", {
+        ...form,
+        role,
+      });
+      setUserId(res.data.userId);
+      setStep("otp");
+    } catch (err) {
+      alert(err.response?.data?.msg || "Signup failed");
+    }
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleLogin = async () => {
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email: form.email,
+        password: form.password,
+      });
+      setUserId(res.data.userId);
+      setStep("otp");
+    } catch (err) {
+      alert(err.response?.data?.msg || "Login failed");
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const url = isLogin ? `${BASE_URL}/api/auth/login` : `${BASE_URL}/api/auth/signup`;
-    
-    const payload = isLogin
-      ? { email: formData.email, password: formData.password, role }
-      : { ...formData, role };
+  const handleVerifyOTP = async () => {
+    const finalUserId = userId || localStorage.getItem("pendingUserId");
+    if (!finalUserId) return alert("User ID missing. Please try again.");
 
     try {
-      const res = await axios.post(url, payload);
-      setMessage(res.data.message);
-
-      if (isLogin) {
-        localStorage.setItem("user", JSON.stringify({
-          id: formData.id,
-          role,
-          email: formData.email,
-        }));
-
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          setIsLogin(true); // After signup, go to login screen
-          setMessage("Account created! Please log in.");
-        }, 1000);
-      }
+      const res = await axios.post("http://localhost:5000/api/auth/verify-otp", {
+        userId: finalUserId,
+        otp,
+      });
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify({ id: finalUserId, email: form.email }));
+      localStorage.removeItem("pendingUserId");
+      alert("Login successful! Redirecting...");
+      navigate("/");
     } catch (err) {
-      setMessage(err.response?.data?.message || "Something went wrong.");
+      alert(err.response?.data?.msg || "OTP verification failed");
     }
   };
 
   return (
     <>
       <Navbar />
-      <section className="min-h-screen bg-gradient-to-br from-[#fff5f5] via-white to-[#fff5f5] flex items-center justify-center px-4">
+      <div className="flex items-center justify-center min-h-screen px-4 pt-20">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="max-w-md w-full bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 border border-gray-200"
         >
-          <h2 className="text-2xl font-bold text-center">
-            <span className="text-red-500">{isLogin ? "Login" : "Sign Up"}</span>{" "}
-            <span className="text-gray-700">as {role.charAt(0).toUpperCase() + role.slice(1)}</span>
+          <h2 className="text-2xl font-semibold text-center text-red-700 mb-6">
+            Suraksha Buddy 
           </h2>
 
-          <div className="flex justify-center gap-4">
-            {["student", "teacher","parent"].map((r) => (
-              <button
-                key={r}
-                className={`px-4 py-1 rounded-full border text-sm font-medium transition ${role === r ? "bg-red-500 text-white" : "border-red-500 text-red-500 hover:bg-red-100"}`}
-                onClick={() => setRole(r)}
-              >
-                {r.charAt(0).toUpperCase() + r.slice(1)}
-              </button>
-            ))}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Role
+            </label>
+            <select
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="student">Student</option>
+              <option value="parent">Parent</option>
+              <option value="teacher">Teacher</option>
+            </select>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {!isLogin && (
-              <div className="relative">
-                <FaUser className="absolute left-3 top-3 text-gray-400" />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name"
-                  value={formData.name}
-                  required
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
-                />
-              </div>
-            )}
-            <div className="relative">
-              <FaIdCard className="absolute left-3 top-3 text-gray-400" />
+          {(step === "signup" || step === "login") && (
+            <>
+              {step === "signup" && (
+                <>
+                  <input
+                    name="name"
+                    placeholder="Name"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50"
+                    onChange={handleChange}
+                  />
+                  <input
+                    name="phone"
+                    placeholder="Phone"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50"
+                    onChange={handleChange}
+                  />
+                </>
+              )}
               <input
-                type="text"
-                name="id"
-                placeholder={`${role === "student" ? "Student" : "Teacher"} ID`}
-                value={formData.id}
-                required
-                onChange={handleChange}
-                className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
-              />
-            </div>
-            <div className="relative">
-              <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
-              <input
-                type="email"
                 name="email"
                 placeholder="Email"
-                value={formData.email}
-                required
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50"
                 onChange={handleChange}
-                className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
               />
-            </div>
-            <div className="relative">
-              <FaLock className="absolute left-3 top-3 text-gray-400" />
               <input
-                type="password"
                 name="password"
+                type="password"
                 placeholder="Password"
-                value={formData.password}
-                required
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50"
                 onChange={handleChange}
-                className="w-full pl-10 pr-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-red-400"
               />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
-            >
-              {isLogin ? "Login" : "Sign Up"}
-            </button>
-          </form>
 
-          {message && (
-            <p className="text-sm text-center text-red-600 mt-2">
-              {message}
-            </p>
+              <button
+                onClick={step === "signup" ? handleSignup : handleLogin}
+                className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition"
+              >
+                {step === "signup" ? "Sign Up" : "Login"}
+              </button>
+
+              <p
+                className="mt-3 text-sm text-red-600 text-center cursor-pointer hover:underline"
+                onClick={() => {
+                  setStep(step === "signup" ? "login" : "signup");
+                  setForm({ name: "", email: "", phone: "", password: "" });
+                }}
+              >
+                {step === "signup"
+                  ? "Already have an account? Login"
+                  : "New here? Sign up"}
+              </p>
+            </>
           )}
 
-          <p className="text-xs text-center text-gray-600 mt-4">
-            {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-            <button onClick={handleToggle} className="text-red-600 underline">
-              {isLogin ? "Sign Up" : "Login"}
-            </button>
-          </p>
+          {step === "otp" && (
+            <>
+              <input
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50"
+              />
+              <button
+                onClick={handleVerifyOTP}
+                className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
+              >
+                Verify OTP
+              </button>
+            </>
+          )}
         </motion.div>
-      </section>
+      </div>
       <Footer />
     </>
   );
-}
+};
+
+export default AuthPage;

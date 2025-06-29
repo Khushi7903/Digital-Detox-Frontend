@@ -13,6 +13,9 @@ import ProtectedRoute from "./components/ProtectedRoute"; // Adjust path if need
 import RegisterMentor from "./pages/RegisterMentot";
 import InfoDesk from "./pages/InfoDesk";
 import OurTeam from "./pages/OurTeam";
+import FAQPage from "./pages/FAQPage";
+import BlogPage from "./pages/BlogPage";
+import BlogDetail from "./components/blogDetail";
 
 
 export default function App() {
@@ -32,6 +35,9 @@ export default function App() {
           <Route path="register-mentor" element={<RegisterMentor />} />
           <Route path="infodesk" element={<InfoDesk />} />
           <Route path="team" element={<OurTeam />} />
+          <Route path="/faqs" element={<FAQPage/>} />
+          <Route path="/blogs" element={<BlogPage/>}/>
+          <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route
             path="/chat"
             element={
