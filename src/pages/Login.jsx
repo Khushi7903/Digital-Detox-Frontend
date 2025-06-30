@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../config.js";
 
 const AuthPage = () => {
   const [step, setStep] = useState("signup");
@@ -38,7 +38,7 @@ const AuthPage = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${BASE_URL}/api/auth/login`, {
         email: form.email,
         password: form.password,
       });
