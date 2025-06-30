@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import contactImg from "../assets/contact-illustration.jpeg";
 import Navbar from "../components/Navbar";
@@ -7,8 +8,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../config";
 
 export default function ContactUs() {
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formData = {
       name: e.target.name.value,
@@ -29,20 +33,23 @@ export default function ContactUs() {
 
       if (res.ok) {
         toast.success("✅ Submitted successfully! We'll get back to you soon.", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
+          position: "top-right",
+          autoClose: 2500
         });
         e.target.reset();
       } else {
-        toast.error(`❌ ${data.error || "Submission failed. Please try again."}`);
+        toast.error(`❌ ${data.error || "Submission failed. Please try again."}`, {
+          position: "top-center",
+          autoClose: 3000,
+        });
       }
     } catch (error) {
-      toast.error("❌ Server error. Please try again later.");
+      toast.error("❌ Server error. Please try again later.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,6 +110,7 @@ export default function ContactUs() {
                 required
                 placeholder="Your Name"
                 className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+                disabled={loading}
               />
               <input
                 type="email"
@@ -110,12 +118,14 @@ export default function ContactUs() {
                 required
                 placeholder="Your Email"
                 className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+                disabled={loading}
               />
               <input
                 type="text"
                 name="subject"
                 placeholder="Subject"
                 className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+                disabled={loading}
               />
               <input
                 type="text"
@@ -123,18 +133,23 @@ export default function ContactUs() {
                 required
                 placeholder="Your Query"
                 className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+                disabled={loading}
               />
               <textarea
                 name="message"
                 rows="3"
                 placeholder="Additional Message (optional)"
                 className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 resize-none"
+                disabled={loading}
               ></textarea>
               <button
                 type="submit"
-                className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md text-xs transition duration-300 ease-in-out"
+                disabled={loading}
+                className={`w-full ${
+                  loading ? "bg-red-400" : "bg-red-500 hover:bg-red-600"
+                } text-white py-2 rounded-md text-xs transition duration-300 ease-in-out`}
               >
-                Submit
+                {loading ? "Submitting..." : "Submit"}
               </button>
             </form>
           </motion.div>

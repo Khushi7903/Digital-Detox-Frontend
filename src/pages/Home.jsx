@@ -384,7 +384,7 @@ useEffect(() => {
 
 
 {/* Tagline for Blogs & Videos */}
-<section className="relative py-16 px-6 bg-[#297AA2] text-white text-center overflow-hidden">
+<section className="relative py-14 px-6 bg-[#297AA2] text-white text-center overflow-hidden">
   <motion.div
     initial={{ y: 30, opacity: 0 }}
     whileInView={{ y: 0, opacity: 1 }}
@@ -394,20 +394,21 @@ useEffect(() => {
     <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-snug">
       📺 Explore Real Stories, Stay Aware
     </h3>
-    <p className="text-sm sm:text-base text-gray-200 px-2">
+    <p className="text-sm sm:text-base text-gray-200 px-2 mb-6">
       Discover blogs and videos based on real-life cyber cases. Learn from real stories,
       understand online risks, and empower yourself to make safer digital choices.
     </p>
+    
+    {/* Button placed inside and centered */}
+    <Link
+      to="/blogs"
+      className="bg-white text-[#297AA2] hover:bg-gray-100 font-semibold px-5 py-2 rounded-full text-sm shadow-md transition inline-flex items-center justify-center"
+    >
+      📚 Explore Blog & Videos →
+    </Link>
   </motion.div>
-
-  {/* Button centered at bottom */}
-  <Link
-    to="/blogs"
-    className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white text-[#297AA2] hover:bg-gray-100 font-semibold px-5 py-2 rounded-full text-sm shadow-md transition items-center justify-center flex"
-  >
-    📚 Explore Blog & Videos →
-  </Link>
 </section>
+
 
         <Footer />
       </div>
