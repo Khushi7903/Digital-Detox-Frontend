@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { BASE_URL } from "../config";
 
 const AuthPage = () => {
   const [step, setStep] = useState("signup");
@@ -24,7 +25,7 @@ const AuthPage = () => {
 
   const handleSignup = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", {
+      const res = await axios.post(`${BASE_URL}/api/auth/signup`, {
         ...form,
         role,
       });
@@ -53,7 +54,7 @@ const AuthPage = () => {
     if (!finalUserId) return alert("User ID missing. Please try again.");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/verify-otp", {
+      const res = await axios.post(`${BASE_URL}/api/auth/verify-otp`, {
         userId: finalUserId,
         otp,
       });
