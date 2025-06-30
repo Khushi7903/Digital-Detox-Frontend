@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { BASE_URL } from "../config.js";
@@ -13,35 +11,37 @@ const AuthPage = () => {
   const [role, setRole] = useState("student");
   const [userId, setUserId] = useState(localStorage.getItem("pendingUserId") || "");
   const [otp, setOtp] = useState("");
-  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userId) {
-      localStorage.setItem("pendingUserId", userId);
-    }
+    if (userId) localStorage.setItem("pendingUserId", userId);
   }, [userId]);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSignup = async () => {
-    setLoading(true);
+    if (!form.name || !form.email || !form.phone || !form.password) {
+      return alert("Please fill all signup fields.");
+    }
     try {
-      const res = await axios.post(`${BASE_URL}/api/auth/signup`, { ...form, role });
+      const res = await axios.post(`${BASE_URL}/api/auth/signup`, {
+        ...form,
+        role,
+      });
       setUserId(res.data.userId);
       setStep("otp");
-      toast.success("Signup successful. OTP sent!");
     } catch (err) {
-      toast.error(err.response?.data?.msg || "Signup failed");
-    } finally {
-      setLoading(false);
+      alert(err.response?.data?.msg || "Signup failed");
     }
   };
 
   const handleLogin = async () => {
-    setLoading(true);
+    if (!form.email || !form.password) {
+      return alert("Please fill all login fields.");
+    }
     try {
       const res = await axios.post(`${BASE_URL}/api/auth/login`, {
         email: form.email,
@@ -49,41 +49,41 @@ const AuthPage = () => {
       });
       setUserId(res.data.userId);
       setStep("otp");
-      toast.success("Login successful. OTP sent!");
     } catch (err) {
-      toast.error(err.response?.data?.msg || "Login failed");
-    } finally {
-      setLoading(false);
+      alert(err.response?.data?.msg || "Login failed");
     }
   };
 
   const handleVerifyOTP = async () => {
     const finalUserId = userId || localStorage.getItem("pendingUserId");
-    if (!finalUserId) return toast.error("User ID missing. Please try again.");
+    if (!otp || !finalUserId) return alert("Please enter OTP");
 
-    setLoading(true);
     try {
-      const res = await axios.post(`${BASE_URL}/api/auth/verify-otp`, {
-        userId: finalUserId,
-        otp,
-      });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify({ id: finalUserId, email: form.email }));
+      const res = await axios.post(
+        step === "signup"
+          ? `${BASE_URL}/api/auth/verify-otp`
+          : `${BASE_URL}/api/auth/verify-login-otp`,
+        {
+          userId: finalUserId,
+          otp,
+        }
+      );
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify({ id: finalUserId, email: form.email }));
+      }
       localStorage.removeItem("pendingUserId");
-      toast.success("OTP verified successfully! Redirecting...");
-      setTimeout(() => navigate("/"), 1500);
+      alert("Login successful! Redirecting...");
+      navigate("/");
     } catch (err) {
-      toast.error(err.response?.data?.msg || "OTP verification failed");
-    } finally {
-      setLoading(false);
+      alert(err.response?.data?.msg || "OTP verification failed");
     }
   };
 
   return (
     <>
       <Navbar />
-      <ToastContainer position="top-right" autoClose={2500} />
-      <div className="flex items-center justify-center min-h-screen px-4 pt-20">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-red-100 to-red-50 px-4 pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -91,11 +91,13 @@ const AuthPage = () => {
           className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 border border-gray-200"
         >
           <h2 className="text-2xl font-semibold text-center text-red-700 mb-6">
-            Suraksha Buddy
+            Suraksha Buddy Authentication
           </h2>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Role
+            </label>
             <select
               className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50"
               value={role}
@@ -116,14 +118,12 @@ const AuthPage = () => {
                     placeholder="Name"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50"
                     onChange={handleChange}
-                    disabled={loading}
                   />
                   <input
                     name="phone"
                     placeholder="Phone"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50"
                     onChange={handleChange}
-                    disabled={loading}
                   />
                 </>
               )}
@@ -132,7 +132,6 @@ const AuthPage = () => {
                 placeholder="Email"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50"
                 onChange={handleChange}
-                disabled={loading}
               />
               <input
                 name="password"
@@ -140,21 +139,13 @@ const AuthPage = () => {
                 placeholder="Password"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50"
                 onChange={handleChange}
-                disabled={loading}
               />
 
               <button
                 onClick={step === "signup" ? handleSignup : handleLogin}
-                className={`w-full ${
-                  loading ? "bg-red-400" : "bg-red-600 hover:bg-red-700"
-                } text-white py-2 rounded-lg transition`}
-                disabled={loading}
+                className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition"
               >
-                {loading
-                  ? "Please wait..."
-                  : step === "signup"
-                  ? "Sign Up"
-                  : "Login"}
+                {step === "signup" ? "Sign Up" : "Login"}
               </button>
 
               <p
@@ -178,16 +169,12 @@ const AuthPage = () => {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50"
-                disabled={loading}
               />
               <button
                 onClick={handleVerifyOTP}
-                className={`w-full ${
-                  loading ? "bg-green-400" : "bg-green-500 hover:bg-green-600"
-                } text-white py-2 rounded-lg transition`}
-                disabled={loading}
+                className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
               >
-                {loading ? "Verifying..." : "Verify OTP"}
+                Verify OTP
               </button>
             </>
           )}
