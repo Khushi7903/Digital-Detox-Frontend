@@ -290,86 +290,87 @@ useEffect(() => {
   </div>
 </section>
 
-
-<section className="py-16 bg-white/70 backdrop-blur-md text-gray-700">
+{/* FAQs Section */}
+<section className="py-20 bg-white/60 backdrop-blur-md text-gray-800">
   <div className="max-w-6xl mx-auto px-4">
     <motion.h3
-      className="text-2xl md:text-3xl font-bold text-center text-[#215f7d] mb-10"
-      initial={{ opacity: 0, y: -20 }}
+      className="text-3xl md:text-4xl font-bold text-center text-[#215f7d] mb-14"
+      initial={{ opacity: 0, y: -40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
     >
       ❓ Frequently Asked Questions
     </motion.h3>
 
-    <Swiper
-      modules={[Autoplay, Navigation]}
-      slidesPerView={1}
-      spaceBetween={20}
-      navigation={{
-        nextEl: ".faq-button-next",
-        prevEl: ".faq-button-prev",
-      }}
-      autoplay={{ delay: 7000, disableOnInteraction: false }}
-      breakpoints={{
-        640: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
-      }}
-      className="relative pb-12"
-    >
-      {[
-        {
-          q: "What is Suraksha Buddy?",
-          a: "A fun tool that helps students check how online life affects mood, sleep, and focus.",
-        },
-        {
-          q: "Who can use this portal?",
-          a: "School and college students, with supportive parents and teachers.",
-        },
-        {
-          q: "Is the self-test free?",
-          a: "Yes! It’s completely free with no sign-up fees.",
-        },
-        {
-          q: "What happens after I take the test?",
-          a: "You get a result in Silver, Bronze, or Golden Star with helpful suggestions.",
-        },
-        {
-          q: "What is the Detox Toolkit?",
-          a: "A collection of mini activities to help you relax and enjoy time offline.",
-        },
-        {
-          q: "Is my score private?",
-          a: "Yes, results are private unless you choose to share them.",
-        },
-      ].map((item, index) => (
-        <SwiperSlide key={index}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            viewport={{ once: true }}
-            className="h-[160px] max-w-[260px] mx-auto bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl p-4 text-center shadow hover:shadow-md transition duration-300 flex flex-col justify-center"
-          >
-            <h4 className="text-base font-semibold text-[#F25C5C]">
-              {item.q}
-            </h4>
-            <p className="text-sm text-gray-700">{item.a}</p>
-          </motion.div>
-        </SwiperSlide>
-      ))}
+    <div className="relative">
+      <Swiper
+        modules={[Autoplay, Navigation]}
+        slidesPerView={1}
+        spaceBetween={20}
+        navigation={{
+          nextEl: ".faq-button-next",
+          prevEl: ".faq-button-prev",
+        }}
+        autoplay={{ delay: 7000, disableOnInteraction: false }}
+        breakpoints={{
+          640: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
+        className="pb-16"
+      >
+        {[
+          {
+            q: "What is Suraksha Buddy?",
+            a: "A fun tool that helps students check how online life affects mood, sleep, and focus.",
+          },
+          {
+            q: "Who can use this portal?",
+            a: "School and college students, with supportive parents and teachers.",
+          },
+          {
+            q: "Is the self-test free?",
+            a: "Yes! It’s completely free with no sign-up fees.",
+          },
+          {
+            q: "What happens after I take the test?",
+            a: "You get a result in Silver, Bronze, or Golden Star with helpful suggestions.",
+          },
+          {
+            q: "What is the Detox Toolkit?",
+            a: "A collection of mini activities to help you relax and enjoy time offline.",
+          },
+          {
+            q: "Is my score private?",
+            a: "Yes, results are private unless you choose to share them.",
+          },
+        ].map((item, index) => (
+          <SwiperSlide key={index}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="h-[180px] max-w-[280px] mx-auto bg-white/50 backdrop-blur-lg border border-white/30 rounded-2xl p-5 text-center shadow-lg hover:shadow-xl transition duration-300 flex flex-col justify-center"
+            >
+              <h4 className="text-lg font-semibold text-[#F25C5C] mb-2">{item.q}</h4>
+              <p className="text-sm text-gray-700">{item.a}</p>
+            </motion.div>
+          </SwiperSlide>
+        ))}
 
-      {/* Custom small red arrows */}
-      <div className="faq-button-prev absolute left-0 top-[45%] z-10 w-7 h-7 rounded-full bg-[#F25C5C] text-white text-sm flex items-center justify-center cursor-pointer shadow hover:scale-105 transition">
-        ‹
-      </div>
-      <div className="faq-button-next absolute right-0 top-[45%] z-10 w-7 h-7 rounded-full bg-[#F25C5C] text-white text-sm flex items-center justify-center cursor-pointer shadow hover:scale-105 transition">
-        ›
-      </div>
-    </Swiper>
+ {/* Custom Cyan Arrows - Larger Size, No Background */}
+<div className="faq-button-prev absolute left-2 top-1/2 transform -translate-y-1/2 text-cyan-700 text-4xl flex items-center justify-center cursor-pointer hover:scale-110 transition z-10">
+  ‹
+</div>
+<div className="faq-button-next absolute right-2 top-1/2 transform -translate-y-1/2 text-cyan-700 text-4xl flex items-center justify-center cursor-pointer hover:scale-110 transition z-10">
+  ›
+</div>
 
-    <div className="mt-8 text-center">
+      </Swiper>
+    </div>
+
+    <div className="mt-10 text-center">
       <Link
         to="/faqs"
         className="inline-block bg-[#F25C5C] text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-red-600 transition"
@@ -380,32 +381,31 @@ useEffect(() => {
   </div>
 </section>
 
-
-{/* Tagline for Blogs & Videos */}
-<section className="relative py-16 px-6 bg-[#297AA2] text-white text-center overflow-hidden">
+{/* Blog & Video Tagline */}
+<section className="relative py-20 px-6 bg-gradient-to-r from-[#2d90b3] to-[#215f7d] text-white text-center overflow-hidden">
   <motion.div
-    initial={{ y: 30, opacity: 0 }}
+    initial={{ y: 50, opacity: 0 }}
     whileInView={{ y: 0, opacity: 1 }}
-    transition={{ duration: 0.6 }}
+    transition={{ duration: 0.8, ease: "easeOut" }}
     className="max-w-3xl mx-auto"
   >
-    <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-snug">
+    <h3 className="text-3xl sm:text-4xl font-bold mb-4 leading-snug">
       📺 Explore Real Stories, Stay Aware
     </h3>
-    <p className="text-sm sm:text-base text-gray-200 px-2">
-      Discover blogs and videos based on real-life cyber cases. Learn from real stories,
+    <p className="text-base sm:text-lg text-white/90 px-2">
+      Discover blogs and videos based on real-life cyber cases. Learn from true stories,
       understand online risks, and empower yourself to make safer digital choices.
     </p>
   </motion.div>
 
-  {/* Button centered at bottom */}
   <Link
     to="/blogs"
-    className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white text-[#297AA2] hover:bg-gray-100 font-semibold px-5 py-2 rounded-full text-sm shadow-md transition items-center justify-center flex"
+    className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white text-[#297AA2] hover:bg-gray-100 font-semibold px-6 py-2 rounded-full text-sm shadow-lg transition"
   >
-    📚 Explore Blog & Videos →
+    📚 Explore Blogs & Videos →
   </Link>
 </section>
+
 
         <Footer />
       </div>
