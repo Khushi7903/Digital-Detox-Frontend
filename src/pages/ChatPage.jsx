@@ -4,8 +4,9 @@ import io from "socket.io-client";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { BASE_URL } from "../config";
 
-const socket = io("https://digital-detox-backend-1.onrender.com/"); // your backend URL
+const socket = io(`${BASE_URL}`); // your backend URL
 
 const mentors = [
   { id: "mentor123", name: "👩‍🏫 Mentor Maya" },
