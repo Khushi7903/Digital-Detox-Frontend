@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { BASE_URL } from "../config.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthPage = () => {
   const [step, setStep] = useState("signup");
@@ -12,36 +14,41 @@ const AuthPage = () => {
   const [userId, setUserId] = useState(localStorage.getItem("pendingUserId") || "");
   const [otp, setOtp] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userId) localStorage.setItem("pendingUserId", userId);
   }, [userId]);
 
-  const handleChange = (e) =>
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSignup = async () => {
     if (!form.name || !form.email || !form.phone || !form.password) {
-      return alert("Please fill all signup fields.");
+      toast.error("⚠️ Please fill all signup fields.");
+      return;
     }
+    setLoading(true);
     try {
-      const res = await axios.post(`${BASE_URL}/api/auth/signup`, {
-        ...form,
-        role,
-      });
+      const res = await axios.post(`${BASE_URL}/api/auth/signup`, { ...form, role });
       setUserId(res.data.userId);
       setStep("otp");
+      toast.success("📩 OTP sent! Please check your inbox.");
     } catch (err) {
-      alert(err.response?.data?.msg || "Signup failed");
+      toast.error(err.response?.data?.msg || "❌ Signup failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleLogin = async () => {
     if (!form.email || !form.password) {
-      return alert("Please fill all login fields.");
+      toast.error("⚠️ Please fill all login fields.");
+      return;
     }
+    setLoading(true);
     try {
       const res = await axios.post(`${BASE_URL}/api/auth/login`, {
         email: form.email,
@@ -49,35 +56,51 @@ const AuthPage = () => {
       });
       setUserId(res.data.userId);
       setStep("otp");
+      toast.success("📩 OTP sent! Please check your inbox.");
     } catch (err) {
-      alert(err.response?.data?.msg || "Login failed");
+      toast.error(err.response?.data?.msg || "❌ Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleVerifyOTP = async () => {
     const finalUserId = userId || localStorage.getItem("pendingUserId");
-    if (!otp || !finalUserId) return alert("Please enter OTP");
-
+    if (!otp || !finalUserId) {
+      toast.error("⚠️ Please enter the OTP.");
+      return;
+    }
+    setLoading(true);
     try {
-      const res = await axios.post(
+      const endpoint =
         step === "signup"
           ? `${BASE_URL}/api/auth/verify-otp`
-          : `${BASE_URL}/api/auth/verify-login-otp`,
-        {
-          userId: finalUserId,
-          otp,
-        }
-      );
+          : `${BASE_URL}/api/auth/verify-login-otp`;
+
+      const res = await axios.post(endpoint, {
+        userId: finalUserId,
+        otp,
+      });
+
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify({ id: finalUserId, email: form.email }));
       }
+
       localStorage.removeItem("pendingUserId");
-      alert("Login successful! Redirecting...");
+      toast.success("✅ Login successful!");
       navigate("/");
     } catch (err) {
-      alert(err.response?.data?.msg || "OTP verification failed");
+      toast.error(err.response?.data?.msg || "❌ OTP verification failed");
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const getHeading = () => {
+    if (step === "signup") return "Sign Up to Suraksha Buddy";
+    if (step === "login") return "Login to Suraksha Buddy";
+    return "Verify OTP";
   };
 
   return (
@@ -91,25 +114,25 @@ const AuthPage = () => {
           className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 border border-gray-200"
         >
           <h2 className="text-2xl font-semibold text-center text-red-700 mb-6">
-            Suraksha Buddy Authentication
+            {getHeading()}
           </h2>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Role
-            </label>
-            <select
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <option value="student">Student</option>
-              <option value="parent">Parent</option>
-              <option value="teacher">Teacher</option>
-            </select>
-          </div>
+          {step !== "otp" && (
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+              <select
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="student">Student</option>
+                <option value="parent">Parent</option>
+                <option value="teacher">Teacher</option>
+              </select>
+            </div>
+          )}
 
-          {(step === "signup" || step === "login") && (
+          {step === "signup" || step === "login" ? (
             <>
               {step === "signup" && (
                 <>
@@ -143,9 +166,35 @@ const AuthPage = () => {
 
               <button
                 onClick={step === "signup" ? handleSignup : handleLogin}
-                className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition"
+                className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition flex justify-center items-center"
+                disabled={loading}
               >
-                {step === "signup" ? "Sign Up" : "Login"}
+                {loading ? (
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8H4z"
+                    ></path>
+                  </svg>
+                ) : step === "signup" ? (
+                  "Sign Up"
+                ) : (
+                  "Login"
+                )}
               </button>
 
               <p
@@ -160,9 +209,7 @@ const AuthPage = () => {
                   : "New here? Sign up"}
               </p>
             </>
-          )}
-
-          {step === "otp" && (
+          ) : (
             <>
               <input
                 placeholder="Enter OTP"
@@ -172,15 +219,40 @@ const AuthPage = () => {
               />
               <button
                 onClick={handleVerifyOTP}
-                className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
+                className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition flex justify-center items-center"
+                disabled={loading}
               >
-                Verify OTP
+                {loading ? (
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8H4z"
+                    ></path>
+                  </svg>
+                ) : (
+                  "Verify OTP"
+                )}
               </button>
             </>
           )}
         </motion.div>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

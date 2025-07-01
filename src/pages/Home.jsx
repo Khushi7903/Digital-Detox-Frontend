@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/Footer";
-import heroVideo from "../assets/cyber-bg.mp4";
+// import heroVideo from "../assets/cyber-bg.mp4";
 import shield from "../assets/suraksha.png";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -128,7 +128,7 @@ useEffect(() => {
     <div className="relative w-full h-full overflow-hidden font-sans">
       <video
         className="fixed top-0 left-0 w-full h-full object-cover z-0"
-        src={heroVideo}
+        src="https://res.cloudinary.com/dr8ynvwv8/video/upload/v1751374589/cyber-bg_lmasjk.mp4"
         autoPlay
         muted
         loop

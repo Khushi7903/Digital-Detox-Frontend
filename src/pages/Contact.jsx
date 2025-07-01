@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import contactImg from "../assets/contact-illustration.jpeg";
 import Navbar from "../components/Navbar";
@@ -7,8 +8,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../config";
 
 export default function ContactUs() {
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formData = {
       name: e.target.name.value,
@@ -28,21 +32,22 @@ export default function ContactUs() {
       const data = await res.json();
 
       if (res.ok) {
-        toast.success("✅ Submitted successfully! We'll get back to you soon.", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-        });
+          toast.success("✅ Submitted successfully!  We'll get back to you soon.", {
+            position: "top-right",
+            autoClose: 2500,
+            className: "bg-white border border-green-400  text-green-600 h-6",
+            bodyClassName: "text-sm",
+            icon: "✅",
+          });
+
         e.target.reset();
       } else {
         toast.error(`❌ ${data.error || "Submission failed. Please try again."}`);
       }
     } catch (error) {
       toast.error("❌ Server error. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -130,11 +135,41 @@ export default function ContactUs() {
                 placeholder="Additional Message (optional)"
                 className="w-full px-3 py-2 text-xs border rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 resize-none"
               ></textarea>
+
               <button
                 type="submit"
-                className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md text-xs transition duration-300 ease-in-out"
+                disabled={loading}
+                className={`w-full flex items-center justify-center bg-red-500 ${
+                  loading ? "bg-opacity-70 cursor-not-allowed" : "hover:bg-red-600"
+                } text-white py-2 rounded-md text-xs transition duration-300 ease-in-out`}
               >
-                Submit
+                {loading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-4 w-4 mr-2 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      ></path>
+                    </svg>
+                    Please wait...
+                  </>
+                ) : (
+                  "Submit"
+                )}
               </button>
             </form>
           </motion.div>

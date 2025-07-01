@@ -5,9 +5,10 @@ import { blogs } from "../assets/data/blogs";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-// ✅ Image imports
+// ✅ Image & Video imports
 import kidsImage from "../assets/kids.jpg";
 import cyberImage from "../assets/cyberSecurity.jpg";
+// import surakshashortfilm from "../assets/surakshashortfilm.mp4";
 
 export default function BlogPage() {
   const [search, setSearch] = useState("");
@@ -38,6 +39,53 @@ export default function BlogPage() {
         >
           📚 Blogs & Articles
         </motion.h1>
+
+        {/* 🎞️ Video + Info Cards Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mb-20 rounded-2xl border border-cyan-200 bg-white/40 backdrop-blur-lg shadow-lg p-6 md:p-10 flex flex-col lg:flex-row items-center lg:items-start gap-10"
+        >
+          {/* Info Cards on Left */}
+          <div className="flex flex-col gap-6 w-full lg:w-2/3">
+            {/* Card 1 */}
+            <div className="p-5 bg-white/60 backdrop-blur-md border border-cyan-200 rounded-xl shadow-md">
+              <h3 className="text-lg font-semibold text-cyan-800 mb-2">🎮 Gaming Addiction in Kids</h3>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                The video highlights how innocent online games can lead to addiction. Excessive screen time affects sleep, studies, and emotional development. Open dialogue is key to prevention.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="p-5 bg-white/60 backdrop-blur-md border border-cyan-200 rounded-xl shadow-md">
+              <h3 className="text-lg font-semibold text-cyan-800 mb-2">⚠️ Cyber Scams Targeting Children</h3>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                Children are often lured into traps by strangers pretending to be gamers or friends. Fake rewards and identity theft are common threats shown in the video.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="p-5 bg-white/60 backdrop-blur-md border border-cyan-200 rounded-xl shadow-md">
+              <h3 className="text-lg font-semibold text-cyan-800 mb-2">🛡️ How to Stay Safe Online</h3>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                Teach children to never share personal info, avoid chatting with strangers, and always talk to a parent before clicking unknown links. Safety starts with awareness.
+              </p>
+            </div>
+          </div>
+
+          {/* Video on Right */}
+          <div className="w-full lg:w-[240px] flex justify-center">
+            <video
+              src="https://res.cloudinary.com/dr8ynvwv8/video/upload/v1751375033/Suraksha-short-film_ouwsih.mp4"
+              controls
+              className="h-[420px] w-[230px] sm:w-[240px] rounded-2xl object-cover shadow-md border border-cyan-300"
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </motion.div>
 
         {/* 🔍 Search */}
         <div className="mb-12 text-center">
