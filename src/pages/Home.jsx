@@ -47,13 +47,13 @@ function Navbar() {
             <Link
               key={index}
               to={link.to}
-              className="hover:text-[#F25C5C] transition"
+              className="hover:text-[#B8860B] transition"
             >
               {link.label}
             </Link>
           ))}
           {isLoggedIn && (
-            <Link to="/score-history" className="hover:text-[#F25C5C]">
+            <Link to="/score-history" className="hover:text-[#B8860B]">
               Score History
             </Link>
           )}
@@ -80,7 +80,7 @@ function Navbar() {
                 key={index}
                 to={link.to}
                 onClick={() => setIsOpen(false)}
-                className="block text-[#213547] hover:text-[#F25C5C] text-base font-medium"
+                className="block text-[#213547] hover:text-[#B8860B] text-base font-medium"
               >
                 {link.label}
               </Link>
@@ -89,7 +89,7 @@ function Navbar() {
               <Link
                 to="/score-history"
                 onClick={() => setIsOpen(false)}
-                className="block text-[#213547] hover:text-[#F25C5C] text-base font-medium"
+                className="block text-[#213547] hover:text-[#B8860B] text-base font-medium"
               >
                 Score History
               </Link>

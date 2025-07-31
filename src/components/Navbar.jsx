@@ -41,8 +41,8 @@ export default function Navbar() {
             <Link
               key={to}
               to={to}
-              className={`hover:text-red-500 transition ${
-                location.pathname === to ? "text-red-500" : "text-gray-700"
+              className={`hover:text-yellow-700 transition ${
+                location.pathname === to ? "text-[#B8860B]" : "text-gray-700"
               }`}
             >
               {label}
@@ -52,8 +52,8 @@ export default function Navbar() {
           {isLoggedIn && (
             <Link
               to="/score-history"
-              className={`hover:text-red-500 transition ${
-                location.pathname === "/score-history" ? "text-red-500" : "text-gray-700"
+              className={`hover:text-yellow-700 transition ${
+                location.pathname === "/score-history" ? "text-yellow-700" : "text-gray-700"
               }`}
             >
               Score History
@@ -82,7 +82,7 @@ export default function Navbar() {
                 key={to}
                 to={to}
                 onClick={() => setIsOpen(false)}
-                className="block text-gray-800 hover:text-red-500 text-base font-medium"
+                className="block text-gray-800 hover:text-yellow-700 text-base font-medium"
               >
                 {label}
               </Link>
@@ -92,7 +92,7 @@ export default function Navbar() {
               <Link
                 to="/score-history"
                 onClick={() => setIsOpen(false)}
-                className="block text-gray-800 hover:text-red-500 text-base font-medium"
+                className="block text-gray-800 hover:text-yellow-700 text-base font-medium"
               >
                 Score History
               </Link>
