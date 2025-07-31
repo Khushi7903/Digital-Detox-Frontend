@@ -119,7 +119,8 @@ export default function Home() {
         loop
         playsInline
       />
-      <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-b from-black/40 via-black/10 to-transparent z-10" />
+      <div className="fixed top-0 left-0 w-full h-full bg-black/70 z-10" />
+
 
       <div className="relative z-20">
         <Navbar />
