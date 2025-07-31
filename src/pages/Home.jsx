@@ -1,17 +1,16 @@
+// ✅ Enhanced UI with Updated Logo Placement, Spacing, and Design Polish
+
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/Footer";
-// import heroVideo from "../assets/cyber-bg.mp4";
 import shield from "../assets/suraksha.png";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-// 🔹 Navbar Component Inside Same File
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,7 +25,6 @@ function Navbar() {
     { to: "/", label: "Home" },
     { to: "/about", label: "About Us" },
     { to: "/infodesk", label: "InfoDesk" },
-    // { to: "/team", label: "Our Team" },
     { to: "/contact", label: "Contact" },
   ];
 
@@ -41,14 +39,9 @@ function Navbar() {
         <Link to="/" className="flex items-center gap-2 text-xl font-bold text-white">
           Suraksha Buddy
         </Link>
-
         <nav className="hidden md:flex space-x-6 items-center font-medium">
           {navLinks.map((link, index) => (
-            <Link
-              key={index}
-              to={link.to}
-              className="hover:text-[#B8860B] transition"
-            >
+            <Link key={index} to={link.to} className="hover:text-[#B8860B] transition">
               {link.label}
             </Link>
           ))}
@@ -58,7 +51,6 @@ function Navbar() {
             </Link>
           )}
         </nav>
-
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={24} color="#fff" /> : <Menu size={24} color="#fff" />}
@@ -101,28 +93,21 @@ function Navbar() {
   );
 }
 
-// 🔹 Home Component
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   useEffect(() => {
     const user = localStorage.getItem("user");
     setIsLoggedIn(!!user);
   }, []);
-
-const handleLogout = () => {
-  localStorage.removeItem("user");
-  localStorage.removeItem("token");
-  setIsLoggedIn(false);
-  navigate("/");
-};
-
-useEffect(() => {
-  const user = localStorage.getItem("user");
-  setIsLoggedIn(!!user);
-}, []);
-
 
   return (
     <div className="relative w-full h-full overflow-hidden font-sans">
@@ -138,26 +123,12 @@ useEffect(() => {
 
       <div className="relative z-20">
         <Navbar />
-
-        {/* Hero */}
         <section className="w-full h-screen flex items-center justify-start px-6 md:px-20 text-left">
-          <div className="text-white max-w-3xl mt-24 space-y-6">
-<div className="flex items-center space-x-3">
-  <img
-    src={shield}
-    alt="Shield Icon"
-    className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
-  />
-  <motion.h1
-    className="text-2xl sm:text-3xl font-bold leading-tight text-[#D4AF37]"
-    initial={{ x: -100, opacity: 0 }}
-    animate={{ x: 0, opacity: 1 }}
-    transition={{ duration: 0.8 }}
-  >
-    Suraksha Buddy
-  </motion.h1>
-</div>
+          <div className="text-white max-w-3xl mt-12 space-y-1">
+            <div className="flex items-center space-x-6">
+            <img src={shield} alt="Shield Icon" className="w-40 h-40 object-contain md:w-48 md:h-48" />
 
+            </div>
 
             <motion.p
               className="text-3xl sm:text-4xl md:text-5xl leading-tight"
@@ -165,8 +136,7 @@ useEffect(() => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              An <i>Initiative</i> to <br />help 
-               the Younger Generations <br />to stay Humane in the AI world
+              An <i>Initiative</i> to <br /> help the Younger Generations <br /> to stay Humane in the AI world
             </motion.p>
 
             <motion.div
@@ -183,8 +153,7 @@ useEffect(() => {
                 </Link>
               ) : (
                 <>
-
-                <p className="mb-4">Start your DIGITAL DETOX journey with SURAKSHA BUDDY</p>
+                  <p className="mb-4">Start your DIGITAL DETOX journey with SURAKSHA BUDDY</p>
                   <Link
                     to="/test"
                     className="bg-[#F25C5C] hover:bg-red-600 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block"
