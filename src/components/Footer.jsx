@@ -7,7 +7,7 @@ export default function Footer() {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="bg-[#FFFDF6] border-t border-gray-200 text-[#213547] px-6 py-10 mt-12"
+      className="bg-gradient-to-t from-yellow-50 border-t border-yellow-200 text-yellow-800 px-6 py-10 mt-12"
     >
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         {/* Brand */}
@@ -15,7 +15,7 @@ export default function Footer() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-xl font-bold text-[#297AA2]"
+          className="text-xl font-extrabold text-yellow-700 tracking-wide"
         >
           Suraksha Buddy
         </motion.h2>
@@ -25,18 +25,38 @@ export default function Footer() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="flex space-x-5 text-[#297AA2] text-xl"
+          className="flex space-x-5 text-yellow-600 text-2xl"
         >
-          <a href=" https://www.facebook.com/profile.php?id=61577907779362 " target="_blank" rel="noopener noreferrer" className="hover:text-[#F25C5C] transition">
+          <a
+            href="https://www.facebook.com/profile.php?id=61577907779362"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-yellow-800 transition"
+          >
             <FaFacebook />
           </a>
-          <a href=" http://linkedin.com/in/suraksha-buddy- " target="_blank" rel="noopener noreferrer" className="hover:text-[#5EC66C] transition">
+          <a
+            href="http://linkedin.com/in/suraksha-buddy-"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-yellow-800 transition"
+          >
             <FaLinkedin />
           </a>
-          <a href=" https://mobile.x.com/Suraksha_Buddy " target="_blank" rel="noopener noreferrer" className="hover:text-[#F2B705] transition">
+          <a
+            href="https://mobile.x.com/Suraksha_Buddy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-yellow-800 transition"
+          >
             <FaTwitter />
           </a>
-          <a href=" https://www.instagram.com/suraksha_buddy/" target="_blank" rel="noopener noreferrer" className="hover:text-[#F25C5C] transition">
+          <a
+            href="https://www.instagram.com/suraksha_buddy/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-yellow-800 transition"
+          >
             <FaInstagram />
           </a>
         </motion.div>
@@ -47,7 +67,7 @@ export default function Footer() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
-        className="text-center text-sm mt-6 text-gray-500"
+        className="text-center text-sm mt-6 text-yellow-600"
       >
         © {new Date().getFullYear()} Suraksha Buddy. All rights reserved.
       </motion.div>
