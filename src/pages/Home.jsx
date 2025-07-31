@@ -113,13 +113,13 @@ export default function Home() {
     <div className="relative w-full h-full overflow-hidden font-sans">
       <video
         className="fixed top-0 left-0 w-full h-full object-cover z-0"
-        src="https://res.cloudinary.com/dr8ynvwv8/video/upload/v1751374589/cyber-bg_lmasjk.mp4"
+        src="https://res.cloudinary.com/dr8ynvwv8/video/upload/v1753980745/3129977-uhd_3840_2160_30fps_zh3qth.mp4"
         autoPlay
         muted
         loop
         playsInline
       />
-      <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-b from-black/70 via-black/30 to-white/10 z-10" />
+      <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-b from-black/40 via-black/10 to-transparent z-10" />
 
       <div className="relative z-20">
         <Navbar />
@@ -147,7 +147,7 @@ export default function Home() {
               {!isLoggedIn ? (
                 <Link
                   to="/login"
-                  className="bg-white text-[#F25C5C] border-2 border-[#F25C5C] hover:bg-[#F25C5C] hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
+                  className="bg-white text-yellow-800 border-2 border-[#B8860B] hover:bg-yellow-100 hover:text-black px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
                 >
                   🔐 Join Us
                 </Link>
@@ -156,7 +156,7 @@ export default function Home() {
                   <p className="mb-4">Start your DIGITAL DETOX journey with SURAKSHA BUDDY</p>
                   <Link
                     to="/test"
-                    className="bg-[#F25C5C] hover:bg-red-600 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
+                    className="bg-[#B8860B] hover:bg-yellow-700 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
                   >
                     🚀 Start Self-Test
                   </Link>
