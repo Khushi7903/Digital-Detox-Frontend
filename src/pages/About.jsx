@@ -1,147 +1,136 @@
-import { motion } from "framer-motion";
-import featureImg from "../assets/feature-illustration.png";
-import { FaBrain, FaHandsHelping, FaTools, FaRobot, FaChartLine } from "react-icons/fa";
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+
+import ShonanMam from "../assets/ShonanMam.jpg";
+import principalMam from "../assets/PrincipalMam.jpg";
+import aasthu from "../assets/Aasthu.png";
+import mahi from "../assets/Mahi.png";
+import vansh from "../assets/Vansh.png";
+import khushi from "../assets/Khushi.jpg";
+import dhriti from "../assets/Dhriti.jpg";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import "../styles/custom-swiper.css"; // <-- arrows color override here
 
-const featureItems = [
+const teamSliderMembers = [
   {
-    icon: <FaBrain className="text-red-500 text-xl" />, // updated color
-    title: "Cyber Psychology Assessment",
-    desc: "Evaluate screen time, digital behavior, and emotional health via 20 expert-crafted questions.",
+    name: "Vansh Sahni",
+    role: "Life Coach | Cyber Warrior",
+    image: vansh,
+    bio: "Psychology Honours graduate from the University of Delhi, equipped with strong research acumen and practical experience in diverse psychological domains.",
   },
   {
-    icon: <FaChartLine className="text-red-500 text-xl" />,
-    title: "Results & Insights",
-    desc: "Get a visual breakdown of your digital habits with expert suggestions.",
+    name: "Mahi Chopra",
+    role: "B.Tech Graduate in Cyber Security",
+    image: mahi,
+    bio: "B.Tech graduate in Cybersecurity with a strong technical background and a deep interest in securing digital systems.",
   },
   {
-    icon: <FaTools className="text-red-500 text-xl" />,
-    title: "Detox Toolkit",
-    desc: "Use journaling, breathing guides, and daily challenges tailored to you.",
+    name: "Aastha",
+    role: "Cyber Warrior | Forensic Science Graduate",
+    image: aasthu,
+    bio: "Forensic Science graduate from Amity University, Noida, with a strong interest in cyber security, digital safety, and community-focused cyber awareness.",
   },
   {
-    icon: <FaHandsHelping className="text-red-500 text-xl" />,
-    title: "Mentor & Buddy System",
-    desc: "Get emotional check-ins with mentors who care.",
+    name: "Khushi",
+    role: "B.Tech CSE | Full Stack Developer",
+    image: khushi,
+    bio: "B.Tech CSE student and Full Stack Developer. Dedicated to continuous learning and innovative problem-solving.",
   },
   {
-    icon: <FaRobot className="text-red-500 text-xl" />,
-    title: "AI Smart Suggestions",
-    desc: "Receive personalized wellness tips with GPT-powered logic.",
+    name: "Dhriti Saxena",
+    role: "B.Tech CSE | Software Developer",
+    image: dhriti,
+    bio: "CSE student at VIT Vellore, passionate about building innovative and user-friendly software solutions.",
   },
 ];
 
-export default function AboutUs() {
+// Reusable card component
+const ProfileCard = ({ image, name, role, bio }) => (
+  <div className="bg-white border border-gray-200 rounded-xl px-4 py-6 shadow-sm text-center w-full hover:shadow-md transition duration-300">
+    <img
+      src={image}
+      alt={name}
+      className="w-20 h-20 mx-auto rounded-full object-cover border-2 border-[#B8860B] mb-3"
+    />
+    <h3 className="text-lg font-semibold text-black mb-1">{name}</h3>
+    <p className="text-sm text-[#B8860B] font-medium mb-2">{role}</p>
+    <p className="text-xs text-gray-600">{bio}</p>
+  </div>
+);
+
+const AboutUs = () => {
   return (
     <>
       <Navbar />
-      <section className="pt-20 pb-16 px-4 bg-gradient-to-br from-[#e0f7fa] via-white to-[#e0f7fa] text-gray-800">
-        <div className="max-w-6xl mx-auto space-y-16">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: -40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold">
-              <span className="text-red-500">About</span> <span className="text-gray-700">Us</span>
-            </h2>
-            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-              We help people build healthier online habits using a mix of psychology, technology, and real support.
-            </p>
-          </motion.div>
+      <div className="bg-white text-gray-800 px-4 md:px-16 py-10 mt-10">
+        {/* Title */}
+        <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 text-black">
+          About Us
+        </h1>
 
-          {/* What We Do */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 gap-10 items-center bg-white/70 backdrop-blur-md rounded-2xl shadow-xl p-6"
-          >
-            <div className="space-y-4 text-center md:text-left">
-              <h3 className="text-2xl font-bold text-red-500">What We Do</h3>
-              <ul className="space-y-3 text-base text-gray-700">
-                <li className="flex items-start">
-                  <FaBrain className="text-red-500 mt-1 mr-2" />
-                  Analyze digital behavior and emotional well-being.
-                </li>
-                <li className="flex items-start">
-                  <FaTools className="text-red-500 mt-1 mr-2" />
-                  Daily detox tools and mindfulness exercises.
-                </li>
-                <li className="flex items-start">
-                  <FaHandsHelping className="text-red-500 mt-1 mr-2" />
-                  Live mentor support and guided emotional journeys.
-                </li>
-                <li className="flex items-start">
-                  <FaRobot className="text-red-500 mt-1 mr-2" />
-                  AI-based suggestions for healthier routines.
-                </li>
-                <li className="flex items-start">
-                  <FaChartLine className="text-red-500 mt-1 mr-2" />
-                  Progress tracking through mood and usage analytics.
-                </li>
-              </ul>
-            </div>
+        {/* Intro */}
+        <p className="text-sm md:text-base text-justify max-w-5xl mx-auto text-gray-600 leading-relaxed mb-12">
+          The <span className="text-[#B8860B] font-semibold">Suraksha Buddy Tool</span> was developed during the Gurugram Police Cyber Security Summer Internship 2025 under the expert guidance and mentorship of <strong className="text-black">Dr. Rakshit Tandon</strong>, a renowned Cyber Security Evangelist and National Cybercrime Investigator. With over two decades of experience, he serves as a consultant to CID, Haryana Police, Director at Future Crime Research Foundation, and Cyber Consultant to IAMAI. He has trained central and state law enforcement agencies like the CBI, NIA, CRPF, NSG, and has educated more than 70 lakh youth on cyber hygiene. Dr. Tandon has delivered sessions for the UNODC, the European Commission, and various armed forces and corporates. Honored with numerous national awards, he remains a trusted advisor in India’s digital safety landscape.
+        </p>
 
-            <div className="text-center">
-              <img
-                src={featureImg}
-                alt="What we do"
-                className="rounded-xl shadow-lg w-full max-w-xs sm:max-w-sm mx-auto"
-              />
-            </div>
-          </motion.div>
+        {/* Team Section */}
+        <h2 className="text-2xl md:text-3xl font-semibold text-center text-black mb-10">
+          Meet Our Team
+        </h2>
 
-          {/* Features - Cards Style */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <h3 className="text-2xl md:text-3xl font-bold mb-10">
-              <span className="text-red-500">Explore</span> <span className="text-gray-700">Our Key Features</span>
-            </h3>
-
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-              {featureItems.map((item, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05 }}
-                  className="bg-white/60 backdrop-blur-lg shadow-md rounded-2xl p-6 text-left space-y-3 hover:shadow-xl transition"
-                >
-                  <div className="text-red-500">{item.icon}</div>
-                  <h4 className="font-semibold text-gray-800 text-lg">{item.title}</h4>
-                  <p className="text-sm text-gray-600">{item.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Tech Stack */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto bg-white/60 backdrop-blur-md rounded-2xl p-8 shadow-md"
-          >
-            <h3 className="text-2xl font-bold mb-4">
-              <span className="text-red-500">Built With</span> <span className="text-gray-700">Modern Tech</span>
-            </h3>
-            <p className="text-base text-gray-700">
-              We use <strong>React.js, Node.js, Firebase</strong>, and <strong>MongoDB</strong> for seamless performance. Our AI tools are powered by GPT for intelligent feedback. Hosted globally on Vercel.
-            </p>
-          </motion.div>
+        {/* Founding Members – Vertical Stack */}
+        <div className="flex flex-col gap-4 max-w-md mx-auto mb-12">
+          <ProfileCard
+            image={principalMam}
+            name="Ms Rashmi Malik"
+            role="Educationist, Counsellor & Cyber Warrior"
+            bio="A seasoned educationist with over 27 years of experience and a Postgraduate degree in Information Technology."
+          />
+          <ProfileCard
+            image={ShonanMam}
+            name="Advocate Shonan K Mahajan"
+            role="Cyber Warrior"
+            bio="Dedicated to spreading awareness on Digital Safety and Digital Rights among schools, universities, and organizations."
+          />
         </div>
-      </section>
+
+        {/* Core Contributors Slider */}
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-xl md:text-2xl font-bold text-center text-black mb-6">
+            Core Contributors
+          </h3>
+          <Swiper
+            modules={[Navigation, Autoplay]}
+            spaceBetween={24}
+            slidesPerView={1}
+            navigation
+            autoplay={{ delay: 3500 }}
+            breakpoints={{
+              640: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+          >
+            {teamSliderMembers.map((member, index) => (
+              <SwiperSlide key={index}>
+                <ProfileCard
+                  image={member.image}
+                  name={member.name}
+                  role={member.role}
+                  bio={member.bio}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </div>
       <Footer />
     </>
   );
-}
+};
+
+export default AboutUs;

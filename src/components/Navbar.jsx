@@ -18,7 +18,7 @@ export default function Navbar() {
     { to: "/", label: "Home" },
     { to: "/about", label: "About Us" },
     { to: "/infodesk", label: "InfoDesk" },
-    { to: "/team", label: "Our Team" },
+    // { to: "/team", label: "Our Team" },
     { to: "/contact", label: "Contact" },
   ];
 

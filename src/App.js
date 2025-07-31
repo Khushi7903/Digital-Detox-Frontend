@@ -12,7 +12,7 @@ import ChatPage from "./pages/ChatPage";
 import ProtectedRoute from "./components/ProtectedRoute"; // Adjust path if needed
 import RegisterMentor from "./pages/RegisterMentot";
 import InfoDesk from "./pages/InfoDesk";
-import OurTeam from "./pages/OurTeam";
+// import OurTeam from "./pages/OurTeam";
 import FAQPage from "./pages/FAQPage";
 import BlogPage from "./pages/BlogPage";
 import BlogDetail from "./components/blogDetail";
@@ -34,7 +34,7 @@ export default function App() {
           <Route path="/toolkit" element={<Toolkit />} />
           <Route path="register-mentor" element={<RegisterMentor />} />
           <Route path="infodesk" element={<InfoDesk />} />
-          <Route path="team" element={<OurTeam />} />
+          {/* <Route path="team" element={<OurTeam />} /> */}
           <Route path="/faqs" element={<FAQPage/>} />
           <Route path="/blogs" element={<BlogPage/>}/>
           <Route path="/blogs/:id" element={<BlogDetail />} />

@@ -1,0 +1,13 @@
+.swiper-button-next,
+.swiper-button-prev {
+  color: #D97706; /* Tailwind's yellow-600 */
+  font-size: 18px !important; /* smaller arrows */
+  scale: 0.5;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-weight: bold;
+}
+
+
