@@ -120,99 +120,103 @@ export default function Home() {
     <div className="w-full min-h-screen bg-white text-black font-sans">
       <div className="relative z-20">
         <Navbar />
-        <section className="w-full flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-6 md:py-8 bg-white">
-  {/* Left Content */}
-  <div className="w-full md:w-1/2 mt-4 md:mt-0 space-y-4 text-left">
-    <div className="flex items-center space-x-4 md:space-x-6">
-      <img
-        src={shield}
-        alt="Shield Icon"
-        className="w-24 h-24 sm:w-28 sm:h-28 md:w-40 md:h-40 object-contain"
-      />
-    </div>
+        <section className="w-full min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-10 bg-white">
+          {/* Left Content */}
+          <div className="w-full md:w-1/2 mt-10 md:mt-0 space-y-4 text-left">
+            <div className="flex items-center space-x-6">
+              <img
+                src={shield}
+                alt="Shield Icon"
+                className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain"
+              />
+            </div>
 
-    <motion.p
-      className="text-2xl sm:text-3xl md:text-5xl leading-snug font-semibold text-black"
-      initial={{ x: 100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.3 }}
-    >
-      An <i className="text-[#B8860B]">Initiative</i> to <br />
-      help the Younger Generations <br />
-      stay Humane in the AI world
-    </motion.p>
+            <motion.p
+              className="text-3xl sm:text-4xl md:text-5xl leading-tight font-semibold text-black"
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              An <i className="text-[#B8860B]">Initiative</i> to <br />
+              help the Younger Generations <br />
+              stay Humane in the AI world
+            </motion.p>
 
-    <motion.div
-      initial={{ y: 50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.6 }}
-    >
-      {!isLoggedIn ? (
-        <Link
-          to="/login"
-          className="bg-white text-[#B8860B] border-2 border-[#B8860B] hover:bg-[#B8860B] hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
-        >
-          🔐 Join Us
-        </Link>
-      ) : (
-        <>
-          <p className="mb-4 text-black text-sm sm:text-base">
-            Start your DIGITAL DETOX journey with{" "}
-            <span className="font-semibold text-[#B8860B]">SURAKSHA BUDDY</span>
-          </p>
-          <Link
-            to="/test"
-            className="bg-[#B8860B] hover:bg-yellow-700 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-2"
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              {!isLoggedIn ? (
+                <Link
+                  to="/login"
+                  className="bg-white text-[#B8860B] border-2 border-[#B8860B] hover:bg-[#B8860B] hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
+                >
+                  🔐 Join Us
+                </Link>
+              ) : (
+                <>
+                  <p className="mb-4 text-black">
+                    Start your DIGITAL DETOX journey with{" "}
+                    <span className="font-semibold text-[#B8860B]">SURAKSHA BUDDY</span>
+                  </p>
+                  <Link
+                    to="/test"
+                    className="bg-[#B8860B] hover:bg-yellow-700 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
+                  >
+                    🚀 Start Self-Test
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="text-black ml-3 bg-white border border-gray-300 hover:bg-gray-100 px-4 py-2 rounded-full text-sm transition"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+            </motion.div>
+          </div>
+
+          {/* Right Side Rotating Image */}
+          <motion.div
+            className="hidden md:flex w-full md:w-1/2 justify-center"
+            animate={{ rotateY: [0, 180, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
           >
-            🚀 Start Self-Test
-          </Link>
-          <button
-            onClick={handleLogout}
-            className="text-black ml-2 bg-white border border-gray-300 hover:bg-gray-100 px-4 py-2 rounded-full text-sm transition mt-2"
+            <img
+              src={hero}
+              alt="Right Side Illustration"
+              className="w-4/5 sm:w-3/5 md:w-[300px] object-contain"
+            />
+          </motion.div>
+        </section>
+
+
+
+        {/* Intro */}
+        <section className="py-6 bg-white text-black text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-0 md:mt-2 mb-10 relative z-40">
+
+
+          <motion.div
+            className="max-w-5xl mx-auto text-center px-6"
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
           >
-            Logout
-          </button>
-        </>
-      )}
-    </motion.div>
-  </div>
-
-  {/* Right Side Rotating Image - hidden on mobile */}
-  <motion.div
-    className="hidden md:flex w-full md:w-1/2 justify-center"
-    animate={{ rotateY: [0, 180, 0] }}
-    transition={{
-      duration: 3,
-      repeat: Infinity,
-      repeatType: "reverse",
-      ease: "easeInOut",
-    }}
-  >
-    <img
-      src={hero}
-      alt="Right Side Illustration"
-      className="w-3/4 md:w-[300px] object-contain"
-    />
-  </motion.div>
-</section>
-
-{/* Intro */}
-<section className="py-6 md:py-8 bg-white text-black text-center px-4 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-[-16px] md:mt-2 mb-10 relative z-40">
-  <motion.div
-    className="max-w-5xl mx-auto text-center px-2 sm:px-6"
-    initial={{ y: 40, opacity: 0 }}
-    whileInView={{ y: 0, opacity: 1 }}
-    transition={{ duration: 0.8 }}
-  >
-    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#B8860B] mb-4">
-      Welcome to <span className="text-[#B8860B]">Suraksha Buddy</span>
-    </h2>
-    <p className="text-base sm:text-lg text-black">
-      A safe digital journey starts here. We empower kids, guide families, and support
-      schools in making the internet a safer, more mindful space.
-    </p>
-  </motion.div>
-</section>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#B8860B] mb-4">
+              Welcome to <span className="text-[#B8860B]">Suraksha Buddy</span>
+            </h2>
+            <p className="text-lg text-black">
+              A safe digital journey starts here. We empower kids, guide families, and support
+              schools in making the internet a safer, more mindful space.
+            </p>
+          </motion.div>
+        </section>
 
         {/* Services */}
         <section className="bg-white py-12">
