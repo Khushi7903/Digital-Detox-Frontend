@@ -106,22 +106,22 @@ const AuthPage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-red-100 to-red-50 px-4 pt-20">
+      <div className="flex items-center justify-center min-h-screen bg-white px-4 pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 border border-gray-200"
+          className="w-full max-w-md bg-white shadow-xl rounded-2xl p-6 border border-gray-200"
         >
-          <h2 className="text-2xl font-semibold text-center text-red-700 mb-6">
+          <h2 className="text-2xl font-bold text-center text-black mb-6">
             {getHeading()}
           </h2>
 
           {step !== "otp" && (
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+              <label className="block text-sm font-semibold text-black mb-1">Role</label>
               <select
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 text-black"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
@@ -139,13 +139,13 @@ const AuthPage = () => {
                   <input
                     name="name"
                     placeholder="Name"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50 text-black"
                     onChange={handleChange}
                   />
                   <input
                     name="phone"
                     placeholder="Phone"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50 text-black"
                     onChange={handleChange}
                   />
                 </>
@@ -153,25 +153,25 @@ const AuthPage = () => {
               <input
                 name="email"
                 placeholder="Email"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 bg-gray-50 text-black"
                 onChange={handleChange}
               />
               <input
                 name="password"
                 type="password"
                 placeholder="Password"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50 text-black"
                 onChange={handleChange}
               />
 
               <button
                 onClick={step === "signup" ? handleSignup : handleLogin}
-                className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition flex justify-center items-center"
+                className="w-full bg-yellow-500 text-black font-semibold py-2 rounded-lg hover:bg-yellow-600 transition flex justify-center items-center"
                 disabled={loading}
               >
                 {loading ? (
                   <svg
-                    className="animate-spin h-5 w-5 text-white"
+                    className="animate-spin h-5 w-5 text-black"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -198,7 +198,7 @@ const AuthPage = () => {
               </button>
 
               <p
-                className="mt-3 text-sm text-red-600 text-center cursor-pointer hover:underline"
+                className="mt-3 text-sm text-yellow-600 text-center cursor-pointer hover:underline"
                 onClick={() => {
                   setStep(step === "signup" ? "login" : "signup");
                   setForm({ name: "", email: "", phone: "", password: "" });
@@ -215,7 +215,7 @@ const AuthPage = () => {
                 placeholder="Enter OTP"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 bg-gray-50 text-black"
               />
               <button
                 onClick={handleVerifyOTP}
