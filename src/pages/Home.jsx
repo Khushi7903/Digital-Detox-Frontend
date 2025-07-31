@@ -117,84 +117,104 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-white text-black font-sans">
-      <div className="relative z-20">
-        <Navbar />
-        <section className="w-full min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-10 bg-white">
-          {/* Left Content */}
-          <div className="w-full md:w-1/2 mt-10 md:mt-0 space-y-4 text-left">
-            <div className="flex items-center space-x-6">
-              <img
-                src={shield}
-                alt="Shield Icon"
-                className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain"
-              />
-            </div>
+  <div className="w-full min-h-screen bg-white text-black font-sans">
+    <div className="relative z-20">
+      <Navbar />
 
-            <motion.p
-              className="text-3xl sm:text-4xl md:text-5xl leading-tight font-semibold text-black"
-              initial={{ x: 100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+    {/* Hero Section */}
+    <section className="w-full min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-10 bg-white">
+      {/* Left Content (Unchanged) */}
+      <div className="w-full md:w-1/2 mt-11 md:mt-0 space-y-6 text-left">
+        <div className="flex items-center space-x-6">
+          <img
+            src={shield}
+            alt="Shield Icon"
+            className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain"
+          />
+        </div>
+
+        <motion.p
+          className="text-3xl sm:text-4xl md:text-5xl leading-tight font-semibold text-black"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          An <i className="text-[#B8860B]">Initiative</i> to <br />
+          help the Younger Generations <br />
+          stay Humane in the AI world
+        </motion.p>
+
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          {!isLoggedIn ? (
+            <Link
+              to="/login"
+              className="bg-white text-[#B8860B] border-2 border-[#B8860B] hover:bg-[#B8860B] hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
             >
-              An <i className="text-[#B8860B]">Initiative</i> to <br />
-              help the Younger Generations <br />
-              stay Humane in the AI world
-            </motion.p>
+              🔐 Join Us
+            </Link>
+          ) : (
+            <>
+              <p className="mb-4 text-black">
+                Start your DIGITAL DETOX journey with{" "}
+                <span className="font-semibold text-[#B8860B]">SURAKSHA BUDDY</span>
+              </p>
+              <Link
+                to="/test"
+                className="bg-[#B8860B] hover:bg-yellow-700 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
+              >
+                🚀 Start Self-Test
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-black ml-3 bg-white border border-gray-300 hover:bg-gray-100 px-4 py-2 rounded-full text-sm transition"
+              >
+                Logout
+              </button>
+            </>
+          )}
+        </motion.div>
+      </div>
 
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              {!isLoggedIn ? (
-                <Link
-                  to="/login"
-                  className="bg-white text-[#B8860B] border-2 border-[#B8860B] hover:bg-[#B8860B] hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
-                >
-                  🔐 Join Us
-                </Link>
-              ) : (
-                <>
-                  <p className="mb-4 text-black">
-                    Start your DIGITAL DETOX journey with{" "}
-                    <span className="font-semibold text-[#B8860B]">SURAKSHA BUDDY</span>
-                  </p>
-                  <Link
-                    to="/test"
-                    className="bg-[#B8860B] hover:bg-yellow-700 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
-                  >
-                    🚀 Start Self-Test
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="text-black ml-3 bg-white border border-gray-300 hover:bg-gray-100 px-4 py-2 rounded-full text-sm transition"
-                  >
-                    Logout
-                  </button>
-                </>
-              )}
-            </motion.div>
-          </div>
+      {/* Right Side Rotating Image (Responsive) */}
+      <motion.div
+        className="w-full md:w-1/2 flex justify-center mt-10 md:mt-0"
+        animate={{ rotateY: [0, 180, 0] }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut",
+        }}
+      >
+        <img
+          src={hero}
+          alt="Right Side Illustration"
+          className="w-4/5 sm:w-3/5 md:w-[300px] lg:w-[350px] xl:w-[400px] object-contain transition-all duration-300"
+        />
+      </motion.div>
+    </section>
 
-          {/* Right Side Rotating Image */}
-          <motion.div
-            className="hidden md:flex w-full md:w-1/2 justify-center"
-            animate={{ rotateY: [0, 180, 0] }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }}
-          >
-            <img
-              src={hero}
-              alt="Right Side Illustration"
-              className="w-4/5 sm:w-3/5 md:w-[300px] object-contain"
-            />
-          </motion.div>
-        </section>
+    {/* Intro Section */}
+    <section className="py-6 bg-white text-black text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-0 md:mt-2 mb-10 relative z-40">
+      <motion.div
+        className="max-w-5xl mx-auto text-center px-6"
+        initial={{ y: 40, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h2 className="text-3xl md:text-4xl font-bold text-[#B8860B] mb-4">
+          Welcome to <span className="text-[#B8860B]">Suraksha Buddy</span>
+        </h2>
+        <p className="text-lg text-black">
+          A safe digital journey starts here. We empower kids, guide families, and support
+          schools in making the internet a safer, more mindful space.
+        </p>
+      </motion.div>
+    </section>
 
 
 
