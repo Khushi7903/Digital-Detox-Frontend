@@ -167,7 +167,7 @@ export default function Home() {
         </section>
 
         {/* Intro */}
-        <section className="py-8 bg-white text-black text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-6 mb-10 relative z-40">
+        <section className="py-8 bg-white text-black text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-2 md:mt-6 mb-10 relative z-40">
           <motion.div
             className="max-w-5xl mx-auto text-center px-6"
             initial={{ y: 40, opacity: 0 }}
