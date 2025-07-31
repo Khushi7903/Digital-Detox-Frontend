@@ -167,7 +167,7 @@ export default function Home() {
         </section>
 
         {/* Intro */}
-        <section className="py-16 bg-white text-black text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-10 mb-10 relative z-40">
+        <section className="py-8 bg-white text-black text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-6 mb-10 relative z-40">
           <motion.div
             className="max-w-5xl mx-auto text-center px-6"
             initial={{ y: 40, opacity: 0 }}
@@ -185,7 +185,7 @@ export default function Home() {
         </section>
 
         {/* Services */}
-        <section className="bg-white py-16">
+        <section className="bg-white py-12">
           <div className="max-w-7xl mx-auto px-6">
             <motion.h3
               className="text-3xl md:text-4xl font-bold text-center text-[#B8860B] mb-12"
@@ -254,7 +254,7 @@ export default function Home() {
         </section>
 
         {/* FAQs */}
-        <section className="py-16 bg-white text-black">
+        <section className="py-8 bg-white text-black mb-6">
           <div className="max-w-6xl mx-auto px-4">
             <motion.h3
               className="text-2xl md:text-3xl font-bold text-center text-[#B8860B] mb-10"
