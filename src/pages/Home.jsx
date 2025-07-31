@@ -198,23 +198,6 @@ export default function Home() {
       </motion.div>
     </section>
 
-    {/* Intro Section */}
-    <section className="py-6 bg-white text-black text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-0 md:mt-2 mb-10 relative z-40">
-      <motion.div
-        className="max-w-5xl mx-auto text-center px-6"
-        initial={{ y: 40, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <h2 className="text-3xl md:text-4xl font-bold text-[#B8860B] mb-4">
-          Welcome to <span className="text-[#B8860B]">Suraksha Buddy</span>
-        </h2>
-        <p className="text-lg text-black">
-          A safe digital journey starts here. We empower kids, guide families, and support
-          schools in making the internet a safer, more mindful space.
-        </p>
-      </motion.div>
-    </section>
 
 
 
