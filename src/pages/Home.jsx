@@ -147,7 +147,7 @@ export default function Home() {
               {!isLoggedIn ? (
                 <Link
                   to="/login"
-                  className="bg-white text-[#F25C5C] border-2 border-[#F25C5C] hover:bg-[#F25C5C] hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block"
+                  className="bg-white text-[#F25C5C] border-2 border-[#F25C5C] hover:bg-[#F25C5C] hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
                 >
                   🔐 Join Us
                 </Link>
@@ -156,7 +156,7 @@ export default function Home() {
                   <p className="mb-4">Start your DIGITAL DETOX journey with SURAKSHA BUDDY</p>
                   <Link
                     to="/test"
-                    className="bg-[#F25C5C] hover:bg-red-600 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block"
+                    className="bg-[#F25C5C] hover:bg-red-600 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
                   >
                     🚀 Start Self-Test
                   </Link>
