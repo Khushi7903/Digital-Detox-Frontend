@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import hero from "../assets/suraksha.png"; // Adjust if needed
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,6 @@ export default function Navbar() {
     { to: "/", label: "Home" },
     { to: "/about", label: "About Us" },
     { to: "/infodesk", label: "InfoDesk" },
-    // { to: "/team", label: "Our Team" },
     { to: "/contact", label: "Contact" },
   ];
 
@@ -27,11 +27,12 @@ export default function Navbar() {
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-md"
+      className="fixed top-0 left-0 w-full z-50 bg-white"
     >
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 text-xl font-bold text-gray-700">
+        <Link to="/" className="flex items-center gap-2 text-xl font-bold text-blue-900">
+          <img src={hero} alt="Logo" className="w-12 h-12 object-contain" />
           Suraksha Buddy
         </Link>
 
@@ -41,8 +42,8 @@ export default function Navbar() {
             <Link
               key={to}
               to={to}
-              className={`hover:text-yellow-700 transition ${
-                location.pathname === to ? "text-[#B8860B]" : "text-gray-700"
+              className={`transition hover:text-green-600 ${
+                location.pathname === to ? "text-blue-700 font-semibold" : "text-gray-800"
               }`}
             >
               {label}
@@ -52,8 +53,8 @@ export default function Navbar() {
           {isLoggedIn && (
             <Link
               to="/score-history"
-              className={`hover:text-yellow-700 transition ${
-                location.pathname === "/score-history" ? "text-yellow-700" : "text-gray-700"
+              className={`hover:text-green-600 transition ${
+                location.pathname === "/score-history" ? "text-blue-700 font-semibold" : "text-gray-800"
               }`}
             >
               Score History
@@ -62,7 +63,7 @@ export default function Navbar() {
         </nav>
 
         {/* Mobile Menu Toggle */}
-        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-gray-800">
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -75,14 +76,14 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white/95 backdrop-blur-md px-6 py-4 text-center space-y-3 rounded-b-xl shadow-md"
+            className="md:hidden px-6 py-4 text-center space-y-3 border-t border-gray-200"
           >
             {navLinks.map(({ to, label }) => (
               <Link
                 key={to}
                 to={to}
                 onClick={() => setIsOpen(false)}
-                className="block text-gray-800 hover:text-yellow-700 text-base font-medium"
+                className="block text-gray-800 hover:text-green-600 text-base font-medium"
               >
                 {label}
               </Link>
@@ -92,7 +93,7 @@ export default function Navbar() {
               <Link
                 to="/score-history"
                 onClick={() => setIsOpen(false)}
-                className="block text-gray-800 hover:text-yellow-700 text-base font-medium"
+                className="block text-gray-800 hover:text-green-600 text-base font-medium"
               >
                 Score History
               </Link>

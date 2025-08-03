@@ -1,106 +1,71 @@
-// ✅ Enhanced UI with Updated Logo Placement, Spacing, and Design Polish
-
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import shield from "../assets/suraksha.png";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import hero from "../assets/heroImg.png"; // Import your hero image
+import { FaStethoscope, FaHandsHelping, FaToolbox, FaUserPlus } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { ArrowRight } from "lucide-react";
+import awarenessImg from "../assets/timmy.jpg"; 
+import slider from "../assets/cyberSecurity.jpg"; 
 
+const generalFaqs = [
+  {
+    q: "What is Suraksha Buddy?",
+    a: "A fun digital tool that helps students check how their online life affects their mood, sleep, and focus.",
+  },
+  {
+    q: "Who can use this portal?",
+    a: "School and college students, along with supportive parents and teachers.",
+  },
+  {
+    q: "Is the self-test free?",
+    a: "Yes! The full portal is free to use — no sign-up fees.",
+  },
+  {
+    q: "What happens after I take the test?",
+    a: "You’ll get a result in one of three zones: Silver 🥈, Bronze 🥈, or Golden Star ⭐ with suggestions and fun activities to try.",
+  },
+  {
+    q: "What does the Golden Star Zone mean?",
+    a: "It means your screen time might need a little adjusting. You may feel tired, anxious, or distracted — and we’re here to help you feel better.",
+  },
+];
 
-function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const location = useLocation();
+const cyberFaqs = [
+  {
+    q: "Why is it important to check if a website starts with 'https://'?",
+    a: "Because the 's' stands for secure – it means data is encrypted.",
+  },
+  {
+    q: "What should you do if you receive a link from an unknown number or email?",
+    a: "Do not click. Always verify the source.",
+  },
+  {
+    q: "A friend sends you a message: ‘You won a free phone! Click here.’ What do you do?",
+    a: "Avoid clicking. It could be a phishing scam.",
+  },
+  {
+    q: "How can you tell if a link is fake?",
+    a: "Hover over it and check for spelling mistakes or unusual domain names (e.g., faceb00k.com).",
+  },
+];
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    setIsLoggedIn(!!user);
-  }, [location]);
-
-  const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/about", label: "About Us" },
-    { to: "/infodesk", label: "InfoDesk" },
-    { to: "/contact", label: "Contact" },
-  ];
-
-  return (
-    <motion.header
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 w-full z-40 bg-white text-black shadow-md"
-    >
-      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
-        <Link to="/" className="flex items-center gap-2 text-xl font-bold text-[#B8860B]">
-          Suraksha Buddy
-        </Link>
-        <nav className="hidden md:flex space-x-6 items-center font-medium">
-          {navLinks.map((link, index) => (
-            <Link
-              key={index}
-              to={link.to}
-              className="hover:text-[#B8860B] transition"
-            >
-              {link.label}
-            </Link>
-          ))}
-          {isLoggedIn && (
-            <Link to="/score-history" className="hover:text-[#B8860B]">
-              Score History
-            </Link>
-          )}
-        </nav>
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={24} color="#000" /> : <Menu size={24} color="#000" />}
-          </button>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-white px-6 py-4 text-center space-y-3 border-t border-gray-200"
-          >
-            {navLinks.map((link, index) => (
-              <Link
-                key={index}
-                to={link.to}
-                onClick={() => setIsOpen(false)}
-                className="block text-[#213547] hover:text-[#B8860B] text-base font-medium"
-              >
-                {link.label}
-              </Link>
-            ))}
-            {isLoggedIn && (
-              <Link
-                to="/score-history"
-                onClick={() => setIsOpen(false)}
-                className="block text-[#213547] hover:text-[#B8860B] text-base font-medium"
-              >
-                Score History
-              </Link>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
-  );
-}
 
 
 export default function Home() {
+  const [category] = useState("General");
+  const [index, setIndex] = useState(0);
+
+  const faqs = category === "General" ? generalFaqs : cyberFaqs;
+
+  const handleNext = () => {
+    setIndex((prev) => (prev + 1) % faqs.length);
+  };
+
+  const handlePrev = () => {
+    setIndex((prev) => (prev - 1 + faqs.length) % faqs.length);
+  };
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -117,296 +82,268 @@ export default function Home() {
   }, []);
 
   return (
-  <div className="w-full min-h-screen bg-white text-black font-sans">
-    <div className="relative z-20">
+    <div className="w-full min-h-screen flex flex-col bg-white text-black font-sans">
       <Navbar />
 
-    {/* Hero Section */}
-    <section className="w-full min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-10 bg-white">
-      {/* Left Content (Unchanged) */}
-      <div className="w-full md:w-1/2 mt-11 md:mt-0 space-y-6 text-left">
-        <div className="flex items-center space-x-6">
-          <img
-            src={shield}
-            alt="Shield Icon"
-            className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain"
-          />
-        </div>
+      <section className="w-full min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-50 via-white to-green-50 px-4 py-12 relative overflow-hidden">
 
-        <motion.p
-          className="text-3xl sm:text-4xl md:text-5xl leading-tight font-semibold text-black"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          An <i className="text-[#B8860B]">Initiative</i> to <br />
-          help the Younger Generations <br />
-          stay Humane in the AI world
-        </motion.p>
+  {/* Container */}
+  <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-10 relative z-10">
+
+    {/* Left: Text Section */}
+    <div className="flex-1 text-center md:text-left">
+      <h1 className="text-3xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
+        Empowering Humans to Thrive<br />
+        <span className="bg-gradient-to-r from-green-600 to-blue-600 text-transparent bg-clip-text">
+          in the Digital World
+        </span>
+      </h1>
+      <p className="text-gray-600 mb-6">
+        Start your DIGITAL DETOX journey with
+        <span className="font-semibold text-green-600"> SURAKSHA BUDDY</span>
+      </p>
+
+      {/* Buttons */}
+      <div className="flex flex-col sm:flex-row items-center gap-4">
+        {isLoggedIn ? (
+          <>
+            <Link
+              to="/test"
+              className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300"
+            >
+              🚀 Start Self-Test
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="text-gray-800 bg-white border border-gray-300 hover:bg-gray-100 px-6 py-3 rounded-full text-sm transition"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link
+            to="/login"
+            className="bg-white text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300"
+          >
+            🔐 Join Us
+          </Link>
+        )}
+      </div>
+    </div>
+
+    {/* Right: Image or Slider */}
+    <div className="flex-1">
+      <img
+        src={slider} // Replace with your asset
+        alt="Digital Detox Illustration"
+        className="w-full max-w-md mx-auto"
+      />
+    </div>
+  </div>
+
+  {/* Background SVG Wave */}
+  <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
+    <svg
+      className="relative block w-full h-24"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1440 320"
+      preserveAspectRatio="none"
+    >
+      <path
+        fill="#d1f4f0"
+        d="M0,160L80,144C160,128,320,96,480,112C640,128,800,192,960,218.7C1120,245,1280,235,1360,229.3L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+      ></path>
+    </svg>
+  </div>
+</section>
+
+
+      {/* Welcome Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="w-full text-center px-6 py-16 bg-white"
+      >
+        <h2 className="text-2xl md:text-3xl font-bold text-blue-700 mb-4">
+          Welcome to Suraksha Buddy
+        </h2>
+        <p className="text-gray-700 max-w-2xl mx-auto text-lg">
+          A safe digital journey starts here. We empower kids, guide families, and support
+          schools in making the internet a safer, more mindful space.
+        </p>
+      </motion.section>
+
+       <section className="w-full bg-white py-16 px-4 md:px-20">
+  <motion.h2
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-10"
+  >
+    What We Offer
+  </motion.h2>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    {/* Card 1: Self Test */}
+    <motion.div
+      whileHover={{ scale: 1.05, rotate: 1 }}
+      className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-blue-200 transition hover:shadow-blue-300 text-center"
+    >
+      <FaStethoscope className="text-4xl text-green-700 mx-auto mb-4" />
+      <h3 className="text-xl font-semibold text-blue-900">Self Test</h3>
+      <p className="text-gray-600 mt-2 mb-4">Take a quick assessment to understand your mental well-being.</p>
+      <Link
+        to="/test"
+        className="inline-block px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
+      >
+        Take Test
+      </Link>
+    </motion.div>
+
+    {/* Card 2: Detox Toolkit */}
+    <motion.div
+      whileHover={{ scale: 1.05, rotate: -1 }}
+      className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-green-200 transition hover:shadow-green-300 text-center"
+    >
+      <FaToolbox className="text-4xl text-blue-600 mx-auto mb-4" />
+      <h3 className="text-xl font-semibold text-green-900">Detox Toolkit</h3>
+      <p className="text-gray-600 mt-2 mb-4">Explore tools & practices to declutter your emotional space.</p>
+      <Link
+        to="/toolkit"
+        className="inline-block px-4 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition"
+      >
+        Explore Toolkit
+      </Link>
+    </motion.div>
+
+    {/* Card 3: Talk to Buddy */}
+    <motion.div
+      whileHover={{ scale: 1.05, y: -5 }}
+      className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-blue-200 transition hover:shadow-blue-300 text-center"
+    >
+      <FaHandsHelping className="text-4xl text-green-700 mx-auto mb-4" />
+      <h3 className="text-xl font-semibold text-blue-900">Talk to Buddy</h3>
+      <p className="text-gray-600 mt-2 mb-4">Connect with a Suraksha Buddy who listens without judgment.</p>
+      <Link
+        to="/chat"
+        className="inline-block px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
+      >
+        Start Chat
+      </Link>
+    </motion.div>
+
+    {/* Card 4: Join as Counselor */}
+    <motion.div
+      whileHover={{ scale: 1.05, y: 5 }}
+      className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-green-200 transition hover:shadow-green-300 text-center"
+    >
+      <FaUserPlus className="text-4xl text-blue-600 mx-auto mb-4" />
+      <h3 className="text-xl font-semibold text-green-900">Join Us</h3>
+      <p className="text-gray-600 mt-2 mb-4">Register as a counselor or volunteer and help someone today.</p>
+      <Link
+        to="/register-mentor"
+        className="inline-block px-4 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition"
+      >
+        Register Now
+      </Link>
+    </motion.div>
+  </div>
+</section>
+
+
+
+<section className="bg-white py-16 px-6 md:px-20 text-black text-center relative z-10">
+  <h2 className="text-3xl md:text-4xl font-bold mb-10">Frequently Asked Questions</h2>
+
+  <div className="relative flex items-center justify-center max-w-3xl mx-auto">
+    {/* Left Arrow */}
+    <button
+      onClick={handlePrev}
+      className="absolute left-0 text-blue-600 hover:text-blue-800"
+      aria-label="Previous Question"
+    >
+      <FaArrowLeft size={24} />
+    </button>
+
+    {/* FAQ Card */}
+    <motion.div
+      key={index}
+      initial={{ x: 100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: -100, opacity: 0 }}
+      transition={{ duration: 0.4 }}
+      className="p-8 bg-blue-50 rounded-xl shadow-lg w-full"
+    >
+      <h3 className="text-xl font-semibold mb-4 text-blue-800">{faqs[index].q}</h3>
+      <p className="text-gray-700 leading-relaxed">{faqs[index].a}</p>
+    </motion.div>
+
+    {/* Right Arrow */}
+    <button
+      onClick={handleNext}
+      className="absolute right-0 text-blue-600 hover:text-blue-800"
+      aria-label="Next Question"
+    >
+      <FaArrowRight size={24} />
+    </button>
+  </div>
+
+  {/* View All Link */}
+  <Link
+    to="/faqs"
+    className="mt-8 inline-block text-sm px-5 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-50 transition-all"
+  >
+    View All FAQs
+  </Link>
+</section>
+
+{/* blogs + videos */}
+
+   <section>
+  <motion.section
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="w-full px-4 md:px-12 py-16"
+  >
+    <div className="bg-gradient-to-br from-blue-100 via-green-100 to-white border-2 border-blue-300 rounded-2xl p-10 flex flex-col md:flex-row items-center justify-between gap-10 shadow-lg min-h-[300px]">
+
+      {/* Left: Text + Explore */}
+      <div className="text-center md:text-left space-y-4 max-w-xl">
+        <h2 className="text-3xl md:text-4xl font-semibold text-blue-800">
+          Explore real stories and stay aware
+        </h2>
+        <p className="text-gray-700 text-base md:text-lg">
+          Be inspired. Be informed. Be safe with real-life experiences and insights.
+        </p>
 
         <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          {!isLoggedIn ? (
-            <Link
-              to="/login"
-              className="bg-white text-[#B8860B] border-2 border-[#B8860B] hover:bg-[#B8860B] hover:text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
-            >
-              🔐 Join Us
-            </Link>
-          ) : (
-            <>
-              <p className="mb-4 text-black">
-                Start your DIGITAL DETOX journey with{" "}
-                <span className="font-semibold text-[#B8860B]">SURAKSHA BUDDY</span>
-              </p>
-              <Link
-                to="/test"
-                className="bg-[#B8860B] hover:bg-yellow-700 text-white px-6 py-3 rounded-full text-sm shadow-lg transition duration-300 inline-block mt-4"
-              >
-                🚀 Start Self-Test
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="text-black ml-3 bg-white border border-gray-300 hover:bg-gray-100 px-4 py-2 rounded-full text-sm transition"
-              >
-                Logout
-              </button>
-            </>
-          )}
+          <Link
+            to="/blogs"
+            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl text-lg shadow-md hover:bg-blue-700 transition"
+          >
+            Explore <ArrowRight size={20} />
+          </Link>
         </motion.div>
       </div>
 
-      {/* Right Side Rotating Image (Responsive) */}
-      <motion.div
-        className="w-full md:w-1/2 flex justify-center mt-10 md:mt-0"
-        animate={{ rotateY: [0, 180, 0] }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut",
-        }}
-      >
+      {/* Right: Image */}
+      <div className="w-full md:w-1/2">
         <img
-          src={hero}
-          alt="Right Side Illustration"
-          className="w-4/5 sm:w-3/5 md:w-[300px] lg:w-[350px] xl:w-[400px] object-contain transition-all duration-300"
+          src={awarenessImg}
+          alt="Awareness illustration"
+          className="w-full h-auto object-contain rounded-xl"
         />
-      </motion.div>
-    </section>
-
-
-
-
-        {/* Intro */}
-        <section className="py-6 bg-white text-black text-center px-6 md:px-20 rounded-2xl shadow-lg max-w-5xl mx-auto mt-0 md:mt-2 mb-10 relative z-40">
-
-
-          <motion.div
-            className="max-w-5xl mx-auto text-center px-6"
-            initial={{ y: 40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-[#B8860B] mb-4">
-              Welcome to <span className="text-[#B8860B]">Suraksha Buddy</span>
-            </h2>
-            <p className="text-lg text-black">
-              A safe digital journey starts here. We empower kids, guide families, and support
-              schools in making the internet a safer, more mindful space.
-            </p>
-          </motion.div>
-        </section>
-
-        {/* Services */}
-        <section className="bg-white py-12">
-          <div className="max-w-7xl mx-auto px-6">
-            <motion.h3
-              className="text-3xl md:text-4xl font-bold text-center text-[#B8860B] mb-12"
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              💡 What We Offer
-            </motion.h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              {[
-                {
-                  title: "Self-Test",
-                  desc: "Evaluate your digital well-being with our cyber psychology self-assessment.",
-                  link: "/test",
-                  color: "#F25C5C",
-                  emoji: "🧠",
-                },
-                {
-                  title: "Detox Toolkit",
-                  desc: "Access actionable tools and tips for a healthier online life.",
-                  link: "/toolkit",
-                  color: "#F2B705",
-                  emoji: "🧰",
-                },
-                {
-                  title: "Talk to your Suraksha Buddy",
-                  desc: "Get guidance and support from digital wellness mentors.",
-                  link: "/chat",
-                  color: "#5EC66C",
-                  emoji: "🎓",
-                },
-                {
-                  title: "Register With Us",
-                  desc: "Join as counselors, volunteers, or mentors to help others.",
-                  link: "/register-mentor",
-                  color: "#297AA2",
-                  emoji: "📋",
-                },
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-white rounded-2xl shadow-md border border-gray-200 hover:shadow-xl transition-transform transform hover:-translate-y-1 p-8 text-center"
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="text-5xl mb-4">{item.emoji}</div>
-                  <h4 className="text-xl font-semibold mb-2 text-black">{item.title}</h4>
-                  <p className="mb-6 text-sm text-gray-700">{item.desc}</p>
-                  <Link
-                    to={
-                      !isLoggedIn && ["/test", "/chat", "/toolkit"].includes(item.link)
-                        ? "/login"
-                        : item.link
-                    }
-                    className="inline-block mt-auto font-semibold text-white px-5 py-2 rounded-full text-sm transition-shadow shadow-sm hover:shadow-md"
-                    style={{ backgroundColor: item.color }}
-                  >
-                    Explore →
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="py-8 bg-white text-black mb-6">
-          <div className="max-w-6xl mx-auto px-4">
-            <motion.h3
-              className="text-2xl md:text-3xl font-bold text-center text-[#B8860B] mb-10"
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              ❓ Frequently Asked Questions
-            </motion.h3>
-
-            <Swiper
-              modules={[Autoplay, Navigation]}
-              slidesPerView={1}
-              spaceBetween={20}
-              navigation={{
-                nextEl: ".faq-button-next",
-                prevEl: ".faq-button-prev",
-              }}
-              autoplay={{ delay: 7000, disableOnInteraction: false }}
-              breakpoints={{
-                640: { slidesPerView: 1 },
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-              }}
-              className="relative pb-12"
-            >
-              {[
-                {
-                  q: "What is Suraksha Buddy?",
-                  a: "A fun tool that helps students check how online life affects mood, sleep, and focus.",
-                },
-                {
-                  q: "Who can use this portal?",
-                  a: "School and college students, with supportive parents and teachers.",
-                },
-                {
-                  q: "Is the self-test free?",
-                  a: "Yes! It’s completely free with no sign-up fees.",
-                },
-                {
-                  q: "What happens after I take the test?",
-                  a: "You get a result in Silver, Bronze, or Golden Star with helpful suggestions.",
-                },
-                {
-                  q: "What is the Detox Toolkit?",
-                  a: "A collection of mini activities to help you relax and enjoy time offline.",
-                },
-                {
-                  q: "Is my score private?",
-                  a: "Yes, results are private unless you choose to share them.",
-                },
-              ].map((item, index) => (
-                <SwiperSlide key={index}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="h-[160px] max-w-[260px] mx-auto bg-white border border-gray-200 rounded-xl p-4 text-center shadow hover:shadow-md transition duration-300 flex flex-col justify-center"
-                  >
-                    <h4 className="text-base font-semibold text-[#F25C5C]">{item.q}</h4>
-                    <p className="text-sm text-gray-700">{item.a}</p>
-                  </motion.div>
-                </SwiperSlide>
-              ))}
-
-              {/* Custom Arrows */}
-              <div className="faq-button-prev absolute left-2 top-1/2 transform -translate-y-1/2 text-[#B8860B] text-4xl cursor-pointer hover:scale-110 transition z-10">
-                ‹
-              </div>
-              <div className="faq-button-next absolute right-2 top-1/2 transform -translate-y-1/2 text-[#B8860B] text-4xl cursor-pointer hover:scale-110 transition z-10">
-                ›
-              </div>
-            </Swiper>
-
-            <div className="mt-8 text-center">
-              <Link
-                to="/faqs"
-                className="inline-block bg-[#B8860B] text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-yellow-700 transition"
-              >
-                View All FAQs →
-              </Link>
-            </div>
-          </div>
-        </section>
-
-
-        <section className="relative py-16 px-4 sm:px-6 bg-[#FFF8E7] border-2 border-[#D4AF37] text-center overflow-hidden rounded-xl shadow-md ml-4 mr-4">
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto"
-          >
-            <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-snug text-black">
-              📺 <span className="text-[#D4AF37]">Explore Real Stories, Stay Aware</span>
-            </h3>
-            <p className="text-sm sm:text-base text-gray-800 px-2">
-              Discover <span className="text-[#D4AF37] font-medium">blogs and videos</span> based on real-life cyber cases.
-              Learn from true stories, understand online risks, and empower yourself to make safer digital choices.
-            </p>
-          </motion.div>
-
-          <div className="mt-8 sm:mt-10 flex justify-center">
-            <Link
-              to="/blogs"
-              className="bg-[#D4AF37] text-white border border-[#D4AF37] hover:bg-white hover:text-[#D4AF37] font-semibold px-6 py-2 rounded-full text-sm shadow-md transition duration-300 ease-in-out flex items-center"
-            >
-              📚 Explore Blog & Videos →
-            </Link>
-          </div>
-        </section>
-
-        <Footer />
       </div>
+    </div>
+  </motion.section>
+</section>
+      <Footer />
     </div>
   );
 }
