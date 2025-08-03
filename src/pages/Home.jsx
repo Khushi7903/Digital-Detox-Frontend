@@ -85,17 +85,18 @@ export default function Home() {
     <div className="w-full min-h-screen flex flex-col bg-white text-black font-sans">
       <Navbar />
 
-      <section className="w-full min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-50 via-white to-green-50 px-4 py-12 relative overflow-hidden">
-  <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-10 px-4 sm:px-6 lg:px-8 relative z-10">
+<section className="w-full min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-50 via-white to-green-50 px-4 py-12 relative overflow-hidden mt-5">
+  <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-10 z-10">
 
-    {/* Left: Text Section */}
-    <div className="flex-1 text-center md:text-left">
+    {/* Text Section */}
+    <div className="w-full md:w-1/2 text-center md:text-left">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
         Empowering Humans to Thrive<br />
         <span className="bg-gradient-to-r from-green-600 to-blue-600 text-transparent bg-clip-text">
           in the Digital World
         </span>
       </h1>
+
       <p className="text-gray-600 mb-6 text-base sm:text-lg">
         Start your DIGITAL DETOX journey with
         <span className="font-semibold text-green-600"> SURAKSHA BUDDY</span>
@@ -129,17 +130,17 @@ export default function Home() {
       </div>
     </div>
 
-    {/* Right: Image */}
-    <div className="flex-1 flex justify-center items-center">
+    {/* Image Section */}
+    <div className="w-full md:w-1/2 flex justify-center items-center">
       <img
-        src={slider} // Replace with your asset path
+        src={slider} // your image asset
         alt="Digital Detox Illustration"
         className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
       />
     </div>
   </div>
 
-  {/* Background SVG Wave */}
+  {/* SVG Background */}
   <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
     <svg
       className="relative block w-full h-24"
@@ -154,6 +155,7 @@ export default function Home() {
     </svg>
   </div>
 </section>
+
 
 
 
@@ -174,86 +176,71 @@ export default function Home() {
         </p>
       </motion.section>
 
-      <section className="w-full bg-white py-16 px-4 md:px-20">
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-10"
+<section className="w-full bg-gradient-to-br from-white via-blue-50 to-green-50 py-20 px-4 md:px-20">
+  <motion.h2
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-14"
+  >
+    What We Offer
+  </motion.h2>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    {[
+      {
+        icon: <FaStethoscope className="text-4xl text-green-600 mx-auto mb-4" />,
+        title: "Self Test",
+        desc: "Take a quick assessment to understand your mental well-being.",
+        link: "/test",
+        button: "Take Test",
+      },
+      {
+        icon: <FaToolbox className="text-4xl text-blue-600 mx-auto mb-4" />,
+        title: "Detox Toolkit",
+        desc: "Explore tools & practices to declutter your emotional space.",
+        link: "/toolkit",
+        button: "Explore Toolkit",
+      },
+      {
+        icon: <FaHandsHelping className="text-4xl text-green-600 mx-auto mb-4" />,
+        title: "Talk to Buddy",
+        desc: "Connect with a Suraksha Buddy who listens without judgment.",
+        link: "/chat",
+        button: "Start Chat",
+      },
+      {
+        icon: <FaUserPlus className="text-4xl text-blue-600 mx-auto mb-4" />,
+        title: "Join Us",
+        desc: "Register as a counselor or volunteer and help someone today.",
+        link: "/register-mentor",
+        button: "Register Now",
+      },
+    ].map(({ icon, title, desc, link, button }, i) => (
+      <motion.div
+        key={i}
+        whileHover={{ scale: 1.03 }}
+        transition={{ type: "spring", stiffness: 200 }}
+        className="bg-white rounded-3xl shadow-md hover:shadow-lg transition duration-300 p-6 border border-gray-100 text-center"
+      >
+        {icon}
+        <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
+        <p className="text-gray-600 mt-2 mb-5 text-sm">{desc}</p>
+        <Link
+          to={link}
+          className="inline-block px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-green-500 text-white text-sm font-semibold shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
         >
-          What We Offer
-        </motion.h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Card 1: Self Test */}
-          <motion.div
-            whileHover={{ scale: 1.05, rotate: 1 }}
-            className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-blue-200 transition hover:shadow-blue-300 text-center"
-          >
-            <FaStethoscope className="text-4xl text-green-700 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-blue-900">Self Test</h3>
-            <p className="text-gray-600 mt-2 mb-4">Take a quick assessment to understand your mental well-being.</p>
-            <Link
-              to="/test"
-              className="inline-block px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
-            >
-              Take Test
-            </Link>
-          </motion.div>
-
-          {/* Card 2: Detox Toolkit */}
-          <motion.div
-            whileHover={{ scale: 1.05, rotate: -1 }}
-            className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-green-200 transition hover:shadow-green-300 text-center"
-          >
-            <FaToolbox className="text-4xl text-blue-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-green-900">Detox Toolkit</h3>
-            <p className="text-gray-600 mt-2 mb-4">Explore tools & practices to declutter your emotional space.</p>
-            <Link
-              to="/toolkit"
-              className="inline-block px-4 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition"
-            >
-              Explore Toolkit
-            </Link>
-          </motion.div>
-
-          {/* Card 3: Talk to Buddy */}
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-blue-200 transition hover:shadow-blue-300 text-center"
-          >
-            <FaHandsHelping className="text-4xl text-green-700 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-blue-900">Talk to Buddy</h3>
-            <p className="text-gray-600 mt-2 mb-4">Connect with a Suraksha Buddy who listens without judgment.</p>
-            <Link
-              to="/chat"
-              className="inline-block px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
-            >
-              Start Chat
-            </Link>
-          </motion.div>
-
-          {/* Card 4: Join as Counselor */}
-          <motion.div
-            whileHover={{ scale: 1.05, y: 5 }}
-            className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-green-200 transition hover:shadow-green-300 text-center"
-          >
-            <FaUserPlus className="text-4xl text-blue-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-green-900">Join Us</h3>
-            <p className="text-gray-600 mt-2 mb-4">Register as a counselor or volunteer and help someone today.</p>
-            <Link
-              to="/register-mentor"
-              className="inline-block px-4 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition"
-            >
-              Register Now
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+          {button}
+        </Link>
+      </motion.div>
+    ))}
+  </div>
+</section>
 
 
 
-      <section className="bg-white py-16 px-6 md:px-20 text-black text-center relative z-10">
+      {/* FAQs  */}
+      <section className="bg-white py-16 px-6 md:px-20 text-blue-700 text-center relative z-10">
         <h2 className="text-3xl md:text-4xl font-bold mb-10">Frequently Asked Questions</h2>
 
         <div className="relative flex items-center justify-center max-w-3xl mx-auto">
@@ -300,48 +287,47 @@ export default function Home() {
 
       {/* blogs + videos */}
 
-      <section>
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="w-full px-4 md:px-12 py-16"
+<section className="w-full px-4 sm:px-6 lg:px-12 py-16 bg-gradient-to-br from-blue-100 via-green-50 to-white">
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="max-w-7xl mx-auto bg-white/70 backdrop-blur-lg border border-blue-200 shadow-2xl rounded-3xl p-6 sm:p-10 md:p-14 flex flex-col-reverse md:flex-row items-center justify-between gap-10"
+  >
+    {/* Text Content */}
+    <div className="w-full md:w-1/2 text-center md:text-left space-y-5">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-blue-900 leading-tight">
+        Real Stories. True Awareness.
+      </h2>
+      <p className="text-gray-700 text-sm sm:text-base md:text-lg">
+        Discover blogs and videos that inform, inspire, and empower you to stay safe and mindful.
+      </p>
+
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <Link
+          to="/blogs"
+          className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-green-500 text-white px-6 py-3 rounded-full text-sm sm:text-base font-medium shadow-md hover:shadow-lg transition"
         >
-          <div className="bg-gradient-to-br from-blue-100 via-green-100 to-white border-2 border-blue-300 rounded-2xl p-10 flex flex-col md:flex-row items-center justify-between gap-10 shadow-lg min-h-[300px]">
+          Explore Now
+          <ArrowRight className="ml-1 transition-transform group-hover:translate-x-1" size={20} />
+        </Link>
+      </motion.div>
+    </div>
 
-            {/* Left: Text + Explore */}
-            <div className="text-center md:text-left space-y-4 max-w-xl">
-              <h2 className="text-3xl md:text-4xl font-semibold text-blue-800">
-                Explore real stories and stay aware
-              </h2>
-              <p className="text-gray-700 text-base md:text-lg">
-                Be inspired. Be informed. Be safe with real-life experiences and insights.
-              </p>
+    {/* Image */}
+    <div className="w-full md:w-1/2 flex justify-center">
+      <img
+        src={awarenessImg}
+        alt="Awareness illustration"
+        className="w-full max-w-[300px] sm:max-w-[400px] md:max-w-[450px] object-contain rounded-xl shadow-lg hover:shadow-xl transition duration-300"
+      />
+    </div>
+  </motion.div>
+</section>
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  to="/blogs"
-                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl text-lg shadow-md hover:bg-blue-700 transition"
-                >
-                  Explore <ArrowRight size={20} />
-                </Link>
-              </motion.div>
-            </div>
-
-            {/* Right: Image */}
-            <div className="w-full md:w-1/2">
-              <img
-                src={awarenessImg}
-                alt="Awareness illustration"
-                className="w-full h-auto object-contain rounded-xl"
-              />
-            </div>
-          </div>
-        </motion.section>
-      </section>
       <Footer />
     </div>
   );
