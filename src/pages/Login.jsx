@@ -16,6 +16,8 @@ const AuthPage = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
 
   useEffect(() => {
     if (userId) localStorage.setItem("pendingUserId", userId);
@@ -28,6 +30,10 @@ const AuthPage = () => {
   const handleSignup = async () => {
     if (!form.name || !form.email || !form.phone || !form.password) {
       toast.error("⚠️ Please fill all signup fields.");
+      return;
+    }
+    if(!strongPasswordRegex.test(form.password)){
+      toast.error("⚠️ Password must be at least 8 characters long, contain uppercase, lowercase, number, and special character.");
       return;
     }
     setLoading(true);
