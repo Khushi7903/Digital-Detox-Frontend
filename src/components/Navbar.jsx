@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import hero from "../assets/suraksha.png"; // Adjust if needed
+import hero from "../assets/suraksha2.png"; // Your updated logo
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,11 +29,14 @@ export default function Navbar() {
       transition={{ duration: 0.5 }}
       className="fixed top-0 left-0 w-full z-50 bg-white"
     >
-      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 text-xl font-bold text-blue-900">
-          <img src={hero} alt="Logo" className="w-12 h-12 object-contain" />
-          Suraksha Buddy
+        <Link to="/" className="flex items-center gap-2 mt-4">
+          <img
+            src={hero}
+            alt="Suraksha Buddy Logo"
+            className="w-28 sm:w-32 md:w-36 object-contain"
+          />
         </Link>
 
         {/* Desktop Nav */}
@@ -62,9 +65,12 @@ export default function Navbar() {
           )}
         </nav>
 
-        {/* Mobile Menu Toggle */}
-        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-gray-800">
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-gray-800 focus:outline-none"
+        >
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
@@ -76,7 +82,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden px-6 py-4 text-center space-y-3 border-t border-gray-200"
+            className="md:hidden px-6 py-4 text-center space-y-4 border-t border-gray-200 bg-white"
           >
             {navLinks.map(({ to, label }) => (
               <Link
