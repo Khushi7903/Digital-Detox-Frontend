@@ -91,8 +91,8 @@ export default function Home() {
     {/* Text Section */}
     <div className="w-full md:w-1/2 text-center md:text-left">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
-        Empowering Humans to Thrive<br />
-        <span className="bg-gradient-to-r from-green-600 to-blue-600 text-transparent bg-clip-text">
+        <span className="bg-gradient-to-r from-green-600 to-blue-600 text-transparent bg-clip-text">An Initiative </span>to
+        Empower every Human Thrive <span className="bg-gradient-to-r from-green-600 to-blue-600 text-transparent bg-clip-text">
           in the Digital World
         </span>
       </h1>
@@ -131,7 +131,7 @@ export default function Home() {
     </div>
 
     {/* Image Section */}
-    <div className="w-full md:w-1/2 flex justify-center items-center">
+    <div className="w-full md:w-1/2 flex justify-center items-center mt-4 md:mt-0">
       <img
         src={slider} // your image asset
         alt="Digital Detox Illustration"
