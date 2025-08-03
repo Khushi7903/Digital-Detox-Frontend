@@ -6,8 +6,8 @@ import Footer from "../components/Footer";
 import { FaStethoscope, FaHandsHelping, FaToolbox, FaUserPlus } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { ArrowRight } from "lucide-react";
-import awarenessImg from "../assets/timmy.jpg"; 
-import slider from "../assets/cyberSecurity.jpg"; 
+import awarenessImg from "../assets/timmy.jpg";
+import slider from "../assets/feature-illustration.png";
 
 const generalFaqs = [
   {
@@ -86,25 +86,23 @@ export default function Home() {
       <Navbar />
 
       <section className="w-full min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-50 via-white to-green-50 px-4 py-12 relative overflow-hidden">
-
-  {/* Container */}
-  <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-10 relative z-10">
+  <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-10 px-4 sm:px-6 lg:px-8 relative z-10">
 
     {/* Left: Text Section */}
     <div className="flex-1 text-center md:text-left">
-      <h1 className="text-3xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
         Empowering Humans to Thrive<br />
         <span className="bg-gradient-to-r from-green-600 to-blue-600 text-transparent bg-clip-text">
           in the Digital World
         </span>
       </h1>
-      <p className="text-gray-600 mb-6">
+      <p className="text-gray-600 mb-6 text-base sm:text-lg">
         Start your DIGITAL DETOX journey with
         <span className="font-semibold text-green-600"> SURAKSHA BUDDY</span>
       </p>
 
       {/* Buttons */}
-      <div className="flex flex-col sm:flex-row items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
         {isLoggedIn ? (
           <>
             <Link
@@ -131,12 +129,12 @@ export default function Home() {
       </div>
     </div>
 
-    {/* Right: Image or Slider */}
-    <div className="flex-1">
+    {/* Right: Image */}
+    <div className="flex-1 flex justify-center items-center">
       <img
-        src={slider} // Replace with your asset
+        src={slider} // Replace with your asset path
         alt="Digital Detox Illustration"
-        className="w-full max-w-md mx-auto"
+        className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
       />
     </div>
   </div>
@@ -158,6 +156,7 @@ export default function Home() {
 </section>
 
 
+
       {/* Welcome Section */}
       <motion.section
         initial={{ opacity: 0, y: 30 }}
@@ -175,174 +174,174 @@ export default function Home() {
         </p>
       </motion.section>
 
-       <section className="w-full bg-white py-16 px-4 md:px-20">
-  <motion.h2
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6 }}
-    className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-10"
-  >
-    What We Offer
-  </motion.h2>
-
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-    {/* Card 1: Self Test */}
-    <motion.div
-      whileHover={{ scale: 1.05, rotate: 1 }}
-      className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-blue-200 transition hover:shadow-blue-300 text-center"
-    >
-      <FaStethoscope className="text-4xl text-green-700 mx-auto mb-4" />
-      <h3 className="text-xl font-semibold text-blue-900">Self Test</h3>
-      <p className="text-gray-600 mt-2 mb-4">Take a quick assessment to understand your mental well-being.</p>
-      <Link
-        to="/test"
-        className="inline-block px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
-      >
-        Take Test
-      </Link>
-    </motion.div>
-
-    {/* Card 2: Detox Toolkit */}
-    <motion.div
-      whileHover={{ scale: 1.05, rotate: -1 }}
-      className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-green-200 transition hover:shadow-green-300 text-center"
-    >
-      <FaToolbox className="text-4xl text-blue-600 mx-auto mb-4" />
-      <h3 className="text-xl font-semibold text-green-900">Detox Toolkit</h3>
-      <p className="text-gray-600 mt-2 mb-4">Explore tools & practices to declutter your emotional space.</p>
-      <Link
-        to="/toolkit"
-        className="inline-block px-4 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition"
-      >
-        Explore Toolkit
-      </Link>
-    </motion.div>
-
-    {/* Card 3: Talk to Buddy */}
-    <motion.div
-      whileHover={{ scale: 1.05, y: -5 }}
-      className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-blue-200 transition hover:shadow-blue-300 text-center"
-    >
-      <FaHandsHelping className="text-4xl text-green-700 mx-auto mb-4" />
-      <h3 className="text-xl font-semibold text-blue-900">Talk to Buddy</h3>
-      <p className="text-gray-600 mt-2 mb-4">Connect with a Suraksha Buddy who listens without judgment.</p>
-      <Link
-        to="/chat"
-        className="inline-block px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
-      >
-        Start Chat
-      </Link>
-    </motion.div>
-
-    {/* Card 4: Join as Counselor */}
-    <motion.div
-      whileHover={{ scale: 1.05, y: 5 }}
-      className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-green-200 transition hover:shadow-green-300 text-center"
-    >
-      <FaUserPlus className="text-4xl text-blue-600 mx-auto mb-4" />
-      <h3 className="text-xl font-semibold text-green-900">Join Us</h3>
-      <p className="text-gray-600 mt-2 mb-4">Register as a counselor or volunteer and help someone today.</p>
-      <Link
-        to="/register-mentor"
-        className="inline-block px-4 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition"
-      >
-        Register Now
-      </Link>
-    </motion.div>
-  </div>
-</section>
-
-
-
-<section className="bg-white py-16 px-6 md:px-20 text-black text-center relative z-10">
-  <h2 className="text-3xl md:text-4xl font-bold mb-10">Frequently Asked Questions</h2>
-
-  <div className="relative flex items-center justify-center max-w-3xl mx-auto">
-    {/* Left Arrow */}
-    <button
-      onClick={handlePrev}
-      className="absolute left-0 text-blue-600 hover:text-blue-800"
-      aria-label="Previous Question"
-    >
-      <FaArrowLeft size={24} />
-    </button>
-
-    {/* FAQ Card */}
-    <motion.div
-      key={index}
-      initial={{ x: 100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: -100, opacity: 0 }}
-      transition={{ duration: 0.4 }}
-      className="p-8 bg-blue-50 rounded-xl shadow-lg w-full"
-    >
-      <h3 className="text-xl font-semibold mb-4 text-blue-800">{faqs[index].q}</h3>
-      <p className="text-gray-700 leading-relaxed">{faqs[index].a}</p>
-    </motion.div>
-
-    {/* Right Arrow */}
-    <button
-      onClick={handleNext}
-      className="absolute right-0 text-blue-600 hover:text-blue-800"
-      aria-label="Next Question"
-    >
-      <FaArrowRight size={24} />
-    </button>
-  </div>
-
-  {/* View All Link */}
-  <Link
-    to="/faqs"
-    className="mt-8 inline-block text-sm px-5 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-50 transition-all"
-  >
-    View All FAQs
-  </Link>
-</section>
-
-{/* blogs + videos */}
-
-   <section>
-  <motion.section
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6 }}
-    className="w-full px-4 md:px-12 py-16"
-  >
-    <div className="bg-gradient-to-br from-blue-100 via-green-100 to-white border-2 border-blue-300 rounded-2xl p-10 flex flex-col md:flex-row items-center justify-between gap-10 shadow-lg min-h-[300px]">
-
-      {/* Left: Text + Explore */}
-      <div className="text-center md:text-left space-y-4 max-w-xl">
-        <h2 className="text-3xl md:text-4xl font-semibold text-blue-800">
-          Explore real stories and stay aware
-        </h2>
-        <p className="text-gray-700 text-base md:text-lg">
-          Be inspired. Be informed. Be safe with real-life experiences and insights.
-        </p>
-
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+      <section className="w-full bg-white py-16 px-4 md:px-20">
+        <motion.h2
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-10"
         >
-          <Link
-            to="/blogs"
-            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl text-lg shadow-md hover:bg-blue-700 transition"
-          >
-            Explore <ArrowRight size={20} />
-          </Link>
-        </motion.div>
-      </div>
+          What We Offer
+        </motion.h2>
 
-      {/* Right: Image */}
-      <div className="w-full md:w-1/2">
-        <img
-          src={awarenessImg}
-          alt="Awareness illustration"
-          className="w-full h-auto object-contain rounded-xl"
-        />
-      </div>
-    </div>
-  </motion.section>
-</section>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Card 1: Self Test */}
+          <motion.div
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-blue-200 transition hover:shadow-blue-300 text-center"
+          >
+            <FaStethoscope className="text-4xl text-green-700 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-blue-900">Self Test</h3>
+            <p className="text-gray-600 mt-2 mb-4">Take a quick assessment to understand your mental well-being.</p>
+            <Link
+              to="/test"
+              className="inline-block px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
+            >
+              Take Test
+            </Link>
+          </motion.div>
+
+          {/* Card 2: Detox Toolkit */}
+          <motion.div
+            whileHover={{ scale: 1.05, rotate: -1 }}
+            className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-green-200 transition hover:shadow-green-300 text-center"
+          >
+            <FaToolbox className="text-4xl text-blue-600 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-green-900">Detox Toolkit</h3>
+            <p className="text-gray-600 mt-2 mb-4">Explore tools & practices to declutter your emotional space.</p>
+            <Link
+              to="/toolkit"
+              className="inline-block px-4 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition"
+            >
+              Explore Toolkit
+            </Link>
+          </motion.div>
+
+          {/* Card 3: Talk to Buddy */}
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-blue-200 transition hover:shadow-blue-300 text-center"
+          >
+            <FaHandsHelping className="text-4xl text-green-700 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-blue-900">Talk to Buddy</h3>
+            <p className="text-gray-600 mt-2 mb-4">Connect with a Suraksha Buddy who listens without judgment.</p>
+            <Link
+              to="/chat"
+              className="inline-block px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
+            >
+              Start Chat
+            </Link>
+          </motion.div>
+
+          {/* Card 4: Join as Counselor */}
+          <motion.div
+            whileHover={{ scale: 1.05, y: 5 }}
+            className="bg-white/50 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-green-200 transition hover:shadow-green-300 text-center"
+          >
+            <FaUserPlus className="text-4xl text-blue-600 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-green-900">Join Us</h3>
+            <p className="text-gray-600 mt-2 mb-4">Register as a counselor or volunteer and help someone today.</p>
+            <Link
+              to="/register-mentor"
+              className="inline-block px-4 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition"
+            >
+              Register Now
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+
+
+      <section className="bg-white py-16 px-6 md:px-20 text-black text-center relative z-10">
+        <h2 className="text-3xl md:text-4xl font-bold mb-10">Frequently Asked Questions</h2>
+
+        <div className="relative flex items-center justify-center max-w-3xl mx-auto">
+          {/* Left Arrow */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-0 text-blue-600 hover:text-blue-800"
+            aria-label="Previous Question"
+          >
+            <FaArrowLeft size={24} />
+          </button>
+
+          {/* FAQ Card */}
+          <motion.div
+            key={index}
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -100, opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="p-8 bg-blue-50 rounded-xl shadow-lg w-full"
+          >
+            <h3 className="text-xl font-semibold mb-4 text-blue-800">{faqs[index].q}</h3>
+            <p className="text-gray-700 leading-relaxed">{faqs[index].a}</p>
+          </motion.div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={handleNext}
+            className="absolute right-0 text-blue-600 hover:text-blue-800"
+            aria-label="Next Question"
+          >
+            <FaArrowRight size={24} />
+          </button>
+        </div>
+
+        {/* View All Link */}
+        <Link
+          to="/faqs"
+          className="mt-8 inline-block text-sm px-5 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-50 transition-all"
+        >
+          View All FAQs
+        </Link>
+      </section>
+
+      {/* blogs + videos */}
+
+      <section>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-full px-4 md:px-12 py-16"
+        >
+          <div className="bg-gradient-to-br from-blue-100 via-green-100 to-white border-2 border-blue-300 rounded-2xl p-10 flex flex-col md:flex-row items-center justify-between gap-10 shadow-lg min-h-[300px]">
+
+            {/* Left: Text + Explore */}
+            <div className="text-center md:text-left space-y-4 max-w-xl">
+              <h2 className="text-3xl md:text-4xl font-semibold text-blue-800">
+                Explore real stories and stay aware
+              </h2>
+              <p className="text-gray-700 text-base md:text-lg">
+                Be inspired. Be informed. Be safe with real-life experiences and insights.
+              </p>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  to="/blogs"
+                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl text-lg shadow-md hover:bg-blue-700 transition"
+                >
+                  Explore <ArrowRight size={20} />
+                </Link>
+              </motion.div>
+            </div>
+
+            {/* Right: Image */}
+            <div className="w-full md:w-1/2">
+              <img
+                src={awarenessImg}
+                alt="Awareness illustration"
+                className="w-full h-auto object-contain rounded-xl"
+              />
+            </div>
+          </div>
+        </motion.section>
+      </section>
       <Footer />
     </div>
   );
