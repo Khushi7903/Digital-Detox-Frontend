@@ -13,7 +13,7 @@ import khushi from "../assets/Khushi.jpg";
 import dhriti from "../assets/Dhriti.jpg";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import "../styles/custom-swiper.css"; // <-- arrows color override here
+import "../styles/custom-swiper.css";
 
 const teamSliderMembers = [
   {
@@ -48,16 +48,15 @@ const teamSliderMembers = [
   },
 ];
 
-// Reusable card component
 const ProfileCard = ({ image, name, role, bio }) => (
-  <div className="bg-white border border-gray-200 rounded-xl px-4 py-6 shadow-sm text-center w-full hover:shadow-md transition duration-300">
+  <div className="bg-white border border-gray-100 rounded-2xl px-5 py-6 shadow-md text-center w-full hover:shadow-lg transition duration-300">
     <img
       src={image}
       alt={name}
-      className="w-20 h-20 mx-auto rounded-full object-cover border-2 border-[#B8860B] mb-3"
+      className="w-20 h-20 mx-auto rounded-full object-cover border-2 border-[#0D9488] mb-3"
     />
-    <h3 className="text-lg font-semibold text-black mb-1">{name}</h3>
-    <p className="text-sm text-[#B8860B] font-medium mb-2">{role}</p>
+    <h3 className="text-lg font-bold text-blue-900 mb-1">{name}</h3>
+    <p className="text-sm text-[#0D9488] font-medium mb-2">{role}</p>
     <p className="text-xs text-gray-600">{bio}</p>
   </div>
 );
@@ -66,24 +65,24 @@ const AboutUs = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-white text-gray-800 px-4 md:px-16 py-10 mt-10">
+      <div className="bg-gradient-to-b from-white via-blue-50 to-green-50 text-gray-800 px-4 md:px-16 py-16 pt-28">
         {/* Title */}
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 text-black">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-8 text-blue-900">
           About Us
         </h1>
 
         {/* Intro */}
-        <p className="text-sm md:text-base text-justify max-w-5xl mx-auto text-gray-600 leading-relaxed mb-12">
-          The <span className="text-[#B8860B] font-semibold">Suraksha Buddy Tool</span> was developed during the Gurugram Police Cyber Security Summer Internship 2025 under the expert guidance and mentorship of <strong className="text-black">Dr. Rakshit Tandon</strong>, a renowned Cyber Security Evangelist and National Cybercrime Investigator. With over two decades of experience, he serves as a consultant to CID, Haryana Police, Director at Future Crime Research Foundation, and Cyber Consultant to IAMAI. He has trained central and state law enforcement agencies like the CBI, NIA, CRPF, NSG, and has educated more than 70 lakh youth on cyber hygiene. Dr. Tandon has delivered sessions for the UNODC, the European Commission, and various armed forces and corporates. Honored with numerous national awards, he remains a trusted advisor in India’s digital safety landscape.
+        <p className="text-base md:text-lg text-justify max-w-5xl mx-auto text-gray-700 leading-relaxed mb-16">
+          The <span className="bg-gradient-to-r from-green-600 to-blue-600 text-transparent bg-clip-text font-semibold">Suraksha Buddy Tool</span> was developed during the Gurugram Police Cyber Security Summer Internship 2025 under the expert guidance and mentorship of{" "}
+          <strong className="text-blue-900">Dr. Rakshit Tandon</strong>, a renowned Cyber Security Evangelist and National Cybercrime Investigator. With over two decades of experience, he serves as a consultant to CID, Haryana Police, Director at Future Crime Research Foundation, and Cyber Consultant to IAMAI. He has trained central and state law enforcement agencies like the CBI, NIA, CRPF, NSG, and has educated more than 70 lakh youth on cyber hygiene. Dr. Tandon has delivered sessions for the UNODC, the European Commission, and various armed forces and corporates. Honored with numerous national awards, he remains a trusted advisor in India’s digital safety landscape.
         </p>
 
-        {/* Team Section */}
-        <h2 className="text-2xl md:text-3xl font-semibold text-center text-black mb-10">
-          Meet Our Team
+        {/* Founders */}
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-blue-900 mb-10">
+          Meet Our Founders
         </h2>
 
-        {/* Founding Members – Vertical Stack */}
-        <div className="flex flex-col gap-4 max-w-md mx-auto mb-12">
+        <div className="flex flex-col gap-6 max-w-md mx-auto mb-16">
           <ProfileCard
             image={principalMam}
             name="Ms Rashmi Malik"
@@ -98,9 +97,9 @@ const AboutUs = () => {
           />
         </div>
 
-        {/* Core Contributors Slider */}
+        {/* Contributors */}
         <div className="max-w-6xl mx-auto">
-          <h3 className="text-xl md:text-2xl font-bold text-center text-black mb-6">
+          <h3 className="text-xl md:text-2xl font-bold text-center text-blue-900 mb-6">
             Core Contributors
           </h3>
           <Swiper
