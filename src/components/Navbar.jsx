@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import hero from "../assets/suraksha2.png"; // Your updated logo
+import hero from "../assets/suraksha1.png"; // Your updated logo
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
