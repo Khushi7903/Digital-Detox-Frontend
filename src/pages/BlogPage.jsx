@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { blogs } from "../assets/data/blogs";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
-// Assets
 import kidsImage from "../assets/kids.jpg";
 import cyberImage from "../assets/cyberSecurity.jpg";
 
