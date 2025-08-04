@@ -1,4 +1,5 @@
 // src/pages/Toolkit.jsx
+import { useEffect } from "react";
 import { Download } from "lucide-react";
 import pdfFile from "../assets/tech_free_quest_guide.pdf";
 import { motion } from "framer-motion";
@@ -6,6 +7,11 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function Toolkit() {
+  // Scroll to top when the component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const tools = [
     {
       title: "📵 No-Phone Hour Challenge",
@@ -41,63 +47,65 @@ export default function Toolkit() {
   };
 
   return (
-    <><Navbar />
-    <section className="min-h-screen px-6 py-16 bg-gradient-to-br from-white via-cyan-50 to-white mt-8">
-      <motion.div
-        className="max-w-5xl mx-auto text-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <motion.h1
-          className="text-3xl font-bold text-cyan-700 mb-6"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          🧰 Digital Detox Toolkit
-        </motion.h1>
-
-        <motion.p
-          className="text-gray-600 mb-10 max-w-2xl mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          Use these powerful tools to take control of your digital habits and feel better every day.
-        </motion.p>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tools.map((tool, i) => (
-            <motion.div
-              key={i}
-              className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition-all duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.1 }}
-            >
-              <h3 className="text-lg font-semibold text-cyan-700 mb-2">{tool.title}</h3>
-              <p className="text-gray-700 text-sm">{tool.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-
+    <>
+      <Navbar />
+      <section className="min-h-screen px-6 md:px-16 py-20 bg-gradient-to-b from-white via-blue-50 to-green-50 text-gray-800 pt-28">
         <motion.div
-          className="mt-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 + tools.length * 0.1 }}
+          className="max-w-6xl mx-auto text-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          <button
-            onClick={handleDownload}
-            className="inline-flex items-center gap-2 bg-cyan-600 text-white px-6 py-2 rounded-md hover:bg-cyan-700 transition"
+          <motion.h1
+            className="text-3xl md:text-4xl font-extrabold text-blue-900 mb-6"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
           >
-            <Download size={18} /> Download Tech-Free Quest Guide (PDF)
-          </button>
+            🧰 Digital Detox Toolkit
+          </motion.h1>
+
+          <motion.p
+            className="text-gray-700 text-base md:text-lg max-w-3xl mx-auto leading-relaxed mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            Use these science-backed tools to take control of your digital habits and improve your mental clarity, productivity, and emotional well-being.
+          </motion.p>
+
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+            {tools.map((tool, i) => (
+              <motion.div
+                key={i}
+                className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 + i * 0.1 }}
+              >
+                <h3 className="text-lg font-semibold text-cyan-700 mb-2">{tool.title}</h3>
+                <p className="text-gray-700 text-sm">{tool.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            className="mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 + tools.length * 0.1 }}
+          >
+            <button
+              onClick={handleDownload}
+              className="inline-flex items-center gap-2 bg-[#0D9488] text-white px-6 py-3 rounded-md font-medium hover:bg-[#0c7a72] transition duration-300"
+            >
+              <Download size={18} />
+              Download Tech-Free Quest Guide (PDF)
+            </button>
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </section>
-    <Footer/>
+      </section>
+      <Footer />
     </>
   );
 }
