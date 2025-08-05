@@ -1,68 +1,116 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { BASE_URL } from "../config";
 
 export default function RegisterMentor() {
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
-    phone: "",
+    mobileNumber: "",
     experience: "",
-    about: "",
-    linkedin: "",
-    role: "volunteer",
+    description: "",
+    expertise: "",
+    preferredTime: "",
+    userType: "volunteer", // lowercase to match backend schema
   });
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success("✅ Submitted successfully!");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      experience: "",
-      about: "",
-      linkedin: "",
-      role: "volunteer",
-    });
+    setLoading(true);
+
+    try {
+      // Step 1: Send email
+      const emailRes = await fetch(`${BASE_URL}/api/send-email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          role:
+            formData.userType.charAt(0).toUpperCase() +
+            formData.userType.slice(1),
+        }),
+      });
+
+      // Step 2: Submit to database
+      const dbRes = await fetch(`${BASE_URL}/api/mentors/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (emailRes.ok && dbRes.ok) {
+        toast.success("✅ Submitted successfully! Check your email.");
+        setFormData({
+          fullName: "",
+          email: "",
+          mobileNumber: "",
+          experience: "",
+          description: "",
+          expertise: "",
+          preferredTime: "",
+          userType: "volunteer",
+        });
+      } else {
+        toast.error("❌ Submission failed. Please check required fields.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast.error("❌ Network error. Try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
       <Navbar />
-      <section className="min-h-screen pt-20 px-4 bg-gradient-to-br from-[#fff5f5] via-white to-[#fff5f5] flex flex-col items-center justify-center">
+      <section className="min-h-screen pt-24 px-4 bg-white flex items-center justify-center">
         <motion.div
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="max-w-xl w-full bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-8 space-y-6"
+          className="max-w-3xl w-full bg-white border border-blue-100 rounded-3xl shadow-xl p-8 sm:p-10 space-y-6"
         >
-          <h2 className="text-3xl font-bold text-center text-red-600">
-            Register With Us
+          <h2 className="text-4xl font-extrabold text-center text-blue-900 drop-shadow">
+            Become a Suraksha Buddy 🛡️
           </h2>
-          <p className="text-center text-gray-700 text-sm">
-            Join our mission to support mental well-being. Whether you're a
-            passionate counselor or a dedicated volunteer, your time and
-            expertise can make a real difference.
+          <p className="text-center text-gray-600 text-sm sm:text-base">
+            Whether you're a counselor or volunteer, your contribution matters.
+            Help us build a safer digital future for everyone.
           </p>
 
-          {/* 🔘 Role Toggle */}
+          {/* Role Toggle */}
           <div className="flex justify-center gap-4">
-            {["volunteer", "counselor"].map((r) => (
+            {["volunteer", "consultant"].map((r) => (
               <button
                 key={r}
-                onClick={() => setFormData((prev) => ({ ...prev, role: r }))}
-                className={`px-4 py-1 rounded-full border text-sm font-medium transition ${
-                  formData.role === r
-                    ? "bg-red-500 text-white"
-                    : "border-red-500 text-red-500 hover:bg-red-100"
+                type="button"
+                onClick={() =>
+                  setFormData((prev) => ({ ...prev, userType: r }))
+                }
+                className={`px-5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+                  formData.userType === r
+                    ? "bg-yellow-400 text-blue-900 shadow-md"
+                    : "border border-blue-300 text-blue-700 hover:bg-blue-50"
                 }`}
               >
                 {r.charAt(0).toUpperCase() + r.slice(1)}
@@ -70,69 +118,117 @@ export default function RegisterMentor() {
             ))}
           </div>
 
-          {/* 📄 Form */}
+          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-300 text-sm"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-300 text-sm"
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-300 text-sm"
-            />
-            <input
-              type="text"
-              name="linkedin"
-              placeholder="LinkedIn Profile URL"
-              value={formData.linkedin}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-300 text-sm"
-            />
-            <input
-              type="text"
-              name="experience"
-              placeholder="Years of Experience"
-              value={formData.experience}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-300 text-sm"
-            />
+            <div className="grid sm:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="fullName"
+                placeholder="Full Name"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+                className="input-style"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="input-style"
+              />
+              <input
+                type="tel"
+                name="mobileNumber"
+                placeholder="Phone Number"
+                value={formData.mobileNumber}
+                onChange={handleChange}
+                required
+                className="input-style"
+              />
+              <input
+                type="text"
+                name="expertise"
+                placeholder="Your Expertise (e.g. Cyber Safety, Psychology)"
+                value={formData.expertise}
+                onChange={handleChange}
+                required
+                className="input-style"
+              />
+              <input
+                type="text"
+                name="experience"
+                placeholder="Years of Experience"
+                value={formData.experience}
+                onChange={handleChange}
+                required
+                className="input-style"
+              />
+              <input
+                type="text"
+                name="preferredTime"
+                placeholder="Preferred Time (e.g. Evenings, Weekends)"
+                value={formData.preferredTime}
+                onChange={handleChange}
+                required
+                className="input-style"
+              />
+            </div>
+
             <textarea
-              name="about"
+              name="description"
               placeholder="Why do you want to join?"
-              value={formData.about}
+              value={formData.description}
               onChange={handleChange}
-              rows={3}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-300 text-sm resize-none"
+              rows={4}
+              required
+              className="w-full px-4 py-3 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 text-sm resize-none bg-white placeholder-gray-500 shadow-inner"
             />
 
-            <button
-              type="submit"
-              className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
-            >
-              Submit
-            </button>
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-fit px-6 py-2.5 rounded-lg font-semibold transition-all shadow-lg text-white ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-teal-600 to-blue-700 hover:brightness-110"
+                }`}
+              >
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <svg
+                      className="animate-spin h-4 w-4 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"
+                      ></path>
+                    </svg>
+                    Submitting...
+                  </span>
+                ) : (
+                  "🚀 Submit Application"
+                )}
+              </button>
+            </div>
           </form>
         </motion.div>
-        <ToastContainer position="top-center" autoClose={3000} theme="colored" />
+        <ToastContainer position="top-center" autoClose={3000} theme="light" />
       </section>
       <Footer />
     </>
