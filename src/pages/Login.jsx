@@ -23,6 +23,11 @@ const AuthPage = () => {
     if (userId) localStorage.setItem("pendingUserId", userId);
   }, [userId]);
 
+  
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -172,7 +177,7 @@ const AuthPage = () => {
 
               <button
                 onClick={step === "signup" ? handleSignup : handleLogin}
-                className="w-full bg-yellow-500 text-black font-semibold py-2 rounded-lg hover:bg-yellow-600 transition flex justify-center items-center"
+                className="w-full rounded-full bg-gradient-to-r from-blue-600 to-green-500 text-white font-semibold py-2 rounded-lg hover:bg-yellow-600 transition flex justify-center items-center"
                 disabled={loading}
               >
                 {loading ? (
@@ -204,7 +209,7 @@ const AuthPage = () => {
               </button>
 
               <p
-                className="mt-3 text-sm text-yellow-600 text-center cursor-pointer hover:underline"
+                className="mt-3 text-sm text-blue-600 text-center cursor-pointer hover:underline"
                 onClick={() => {
                   setStep(step === "signup" ? "login" : "signup");
                   setForm({ name: "", email: "", phone: "", password: "" });

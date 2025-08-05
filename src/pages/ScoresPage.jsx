@@ -143,7 +143,7 @@ export default function ScoresPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#16a34a] mb-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-800 mb-8">
             📊 Your Score Summary
           </h2>
 
@@ -154,7 +154,7 @@ export default function ScoresPage() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.4 }}
-              className="text-3xl font-bold text-[#22c55e]"
+              className="text-3xl font-bold text-gray-700"
             >
               {getBadge()}
             </motion.p>
