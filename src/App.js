@@ -16,6 +16,7 @@ import InfoDesk from "./pages/InfoDesk";
 import FAQPage from "./pages/FAQPage";
 import BlogPage from "./pages/BlogPage";
 import BlogDetail from "./components/blogDetail";
+import MentorDashboard from "./pages/MentorDashboard";
 
 
 export default function App() {
@@ -38,6 +39,12 @@ export default function App() {
           <Route path="/faqs" element={<FAQPage/>} />
           <Route path="/blogs" element={<BlogPage/>}/>
           <Route path="/blogs/:id" element={<BlogDetail />} />
+          <Route
+            path="/dashboard"
+            element={
+              <MentorDashboard/>
+            }
+            />
           <Route
             path="/chat"
             element={
