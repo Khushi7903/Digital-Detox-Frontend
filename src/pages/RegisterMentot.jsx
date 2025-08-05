@@ -113,11 +113,10 @@ export default function RegisterMentor() {
                 onClick={() =>
                   setFormData((prev) => ({ ...prev, userType: r }))
                 }
-                className={`px-5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
-                  formData.userType === r
+                className={`px-5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${formData.userType === r
                     ? "bg-yellow-400 text-blue-900 shadow-md"
                     : "border border-blue-300 text-blue-700 hover:bg-blue-50"
-                }`}
+                  }`}
               >
                 {r.charAt(0).toUpperCase() + r.slice(1)}
               </button>
@@ -197,11 +196,10 @@ export default function RegisterMentor() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-fit px-6 py-2.5 rounded-lg font-semibold transition-all shadow-lg text-white ${
-                  loading
+                className={`w-fit px-6 py-2.5 rounded-lg font-semibold transition-all shadow-lg text-white ${loading
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-gradient-to-r from-teal-600 to-blue-700 hover:brightness-110"
-                }`}
+                  }`}
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
@@ -232,14 +230,14 @@ export default function RegisterMentor() {
                 )}
               </button>
             </div>
-<div className="flex justify-center">
-  <button
-    onClick={handleClick}
-    className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg mt-2"
-  >
-    Go to Dashboard
-  </button>
-</div>
+            <div className="flex justify-center">
+              <button
+                onClick={handleClick}
+                className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg mt-2"
+              >
+                Go to Dashboard
+              </button>
+            </div>
 
           </form>
         </motion.div>

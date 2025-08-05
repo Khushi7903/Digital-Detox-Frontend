@@ -29,7 +29,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/test" element={<SelfTest />} />
+          {/* <Route path="/test" element={<SelfTest />} /> */}
           <Route path="/result" element={<ResultPage />} />
           <Route path="/score-history" element={<ScoresPage />} />
           <Route path="/toolkit" element={<Toolkit />} />
@@ -50,6 +50,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <ChatPage/>
+              </ProtectedRoute>
+            }
+            />
+          <Route
+            path="/test"
+            element={
+              <ProtectedRoute>
+                <SelfTest/>
               </ProtectedRoute>
             }
             />
