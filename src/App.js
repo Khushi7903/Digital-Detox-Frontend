@@ -31,7 +31,7 @@ export default function App() {
           <Route path="/services" element={<Services />} />
           {/* <Route path="/test" element={<SelfTest />} /> */}
           <Route path="/result" element={<ResultPage />} />
-          <Route path="/score-history" element={<ScoresPage />} />
+          
           <Route path="/toolkit" element={<Toolkit />} />
           <Route path="register-mentor" element={<RegisterMentor />} />
           <Route path="infodesk" element={<InfoDesk />} />
@@ -53,6 +53,11 @@ export default function App() {
               </ProtectedRoute>
             }
             />
+            <Route path="/score-history" element={
+              <ProtectedRoute>
+                <ScoresPage />
+              </ProtectedRoute>
+            } />
           <Route
             path="/test"
             element={

@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { BASE_URL } from "../config";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function RegisterMentor() {
   const [formData, setFormData] = useState({
@@ -21,10 +21,10 @@ export default function RegisterMentor() {
 
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/dashboard"); // Redirect to dashboard
-  };
+  // const navigate = useNavigate();
+  // const handleClick = () => {
+  //   navigate("/dashboard"); // Redirect to dashboard
+  // };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -230,14 +230,14 @@ export default function RegisterMentor() {
                 )}
               </button>
             </div>
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <button
                 onClick={handleClick}
                 className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg mt-2"
               >
                 Go to Dashboard
               </button>
-            </div>
+            </div> */}
 
           </form>
         </motion.div>
