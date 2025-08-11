@@ -125,12 +125,12 @@ export default function ResultPage() {
               ⬅ Back to Home
             </button>
 
-            <button
+            {/* <button
               onClick={() => navigate("/chat")}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow transition"
             >
               💬 Talk to Mentor
-            </button>
+            </button> */}
 
             <button
               onClick={() => navigate("/toolkit")}
