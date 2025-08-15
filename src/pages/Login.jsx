@@ -43,7 +43,7 @@ const AuthPage = () => {
     }
     setLoading(true);
     try {
-      const res = await axios.post(`${BASE_URL}/api/auth`, { ...form, role });
+      const res = await axios.post(`${BASE_URL}/api/auth/signup`, { ...form, role });
       setUserId(res.data.userId);
       setStep("otp");
       toast.success("📩 OTP sent! Please check your inbox.");
